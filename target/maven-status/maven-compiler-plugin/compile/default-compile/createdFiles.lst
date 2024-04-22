@@ -1,3 +1,4 @@
-studio/startapps/pandemona/controllers/UserController.class
-studio/startapps/pandemona/repositories/UserRepository.class
 studio/startapps/pandemona/models/User.class
+studio/startapps/pandemona/controllers/HomeController.class
+studio/startapps/pandemona/repositories/UserRepository.class
+studio/startapps/pandemona/controllers/UserController.class
