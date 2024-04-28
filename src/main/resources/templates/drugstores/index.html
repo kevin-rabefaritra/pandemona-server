@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<th:block layout:fragment="pagetitle">
+	<!--page title-->
+	<div th:replace="~{partials/title-meta :: title-meta('Basic Tables')}"></div>
+</th:block>
+
+<head>
+
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<!-- start page title -->
+		<div th:replace="~{partials/page-title :: page-title('Basic Tables','Tables')}"></div>
+
+		<div class="row">
+			<div class="col-xl-12">
+				<div class="card">
+					<div class="card-header align-items-center d-flex">
+						<h4 class="card-title mb-0 flex-grow-1">Drugstores</h4>
+					</div><!-- end card header -->
+
+					<div class="card-body">
+						<div class="live-preview">
+							<div class="table-responsive">
+								<table class="table align-middle table-nowrap mb-0">
+									<thead>
+										<tr>
+											<th scope="col">ID</th>
+											<th scope="col">Name</th>
+											<th scope="col">Address</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="drugstore : ${drugstores}">
+											<td th:text="${drugstore.id}"></td>
+											<td th:text="${drugstore.name}"></td>
+											<td th:text="${drugstore.address}"></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div><!-- end card-body -->
+			</div><!-- end card -->
+		</div>
+		<!-- end row -->
+	</div>
+
+	<th:block layout:fragment="modal">
+
+	</th:block>
+	<th:block layout:fragment="pagejs">
+		<!-- prismjs plugin -->
+		<script src="/assets/libs/prismjs/prism.js"></script>
+	</th:block>
+</body>
+
+</html>

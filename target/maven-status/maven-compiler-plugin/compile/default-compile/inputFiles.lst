@@ -1,5 +1,8 @@
-/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/models/User.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/converters/StringListConverter.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/models/City.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/controllers/DrugstoreController.java
 /Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/PandemonaApplication.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/models/Drugstore.java
 /Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/controllers/HomeController.java
-/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/controllers/UserController.java
-/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/repositories/UserRepository.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/models/BaseEntity.java
+/Users/ws/Documents/workspace/repo/pandemona-server/src/main/java/studio/startapps/pandemona/repositories/DrugstoreRepository.java
