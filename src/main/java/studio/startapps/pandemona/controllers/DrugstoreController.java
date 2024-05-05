@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import studio.startapps.pandemona.models.Business;
+import studio.startapps.pandemona.models.Drugstore;
 import studio.startapps.pandemona.repositories.DrugstoreRepository;
 
 import java.util.List;
@@ -19,9 +19,22 @@ public class DrugstoreController {
 
     @GetMapping(path = "/")
     public String index(Model model) {
-        List<Business> drugstoreList = this.drugstoreRepository.findAll();
+        List<Drugstore> drugstoreList = this.drugstoreRepository.findAll();
 
         model.addAttribute("drugstores", drugstoreList);
         return "drugstores/index";
+    }
+
+    /**
+     * Add a new drugstore
+     * @param Model
+     * @return String
+     */
+    @GetMapping(path = "/add")
+    public String add(Model model) {
+        Drugstore drugstore = new Drugstore();
+        model.addAttribute("drugstore", drugstore);
+
+        return "drugstores/form";
     }
 }
