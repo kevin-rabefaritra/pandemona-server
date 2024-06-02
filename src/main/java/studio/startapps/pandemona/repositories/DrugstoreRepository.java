@@ -1,11 +1,11 @@
 package studio.startapps.pandemona.repositories;
 
-import org.springframework.data.repository.ListCrudRepository;
-import studio.startapps.pandemona.models.Business;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import studio.startapps.pandemona.models.Drugstore;
 
+@Repository
+public interface DrugstoreRepository extends CrudRepository<Drugstore, Long> {
 
-public interface DrugstoreRepository extends ListCrudRepository<Drugstore, Long> {
-
-    Drugstore findById(long id);
+    Drugstore findFirstById(long id);
 }

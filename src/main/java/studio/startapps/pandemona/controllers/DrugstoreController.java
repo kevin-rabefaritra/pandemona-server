@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import studio.startapps.pandemona.models.Drugstore;
 import studio.startapps.pandemona.repositories.DrugstoreRepository;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(path = "/drugstores")
 public class DrugstoreController {
@@ -19,7 +17,7 @@ public class DrugstoreController {
 
     @GetMapping(path = "/")
     public String index(Model model) {
-        List<Drugstore> drugstoreList = this.drugstoreRepository.findAll();
+        Iterable<Drugstore> drugstoreList = this.drugstoreRepository.findAll();
 
         model.addAttribute("drugstores", drugstoreList);
         return "drugstores/index";
