@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
+
 @MappedSuperclass
 public abstract class BaseEntity {
 
@@ -12,13 +14,13 @@ public abstract class BaseEntity {
     private long id;
 
     @CreatedDate
-    private Long createdDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
-    private Long lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @Column
-    private Long deletedDate = null;
+    private LocalDateTime deletedDate = null;
 
     public long getId() {
         return id;
@@ -28,27 +30,27 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public Long getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Long createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Long getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Long lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Long getDeletedDate() {
+    public LocalDateTime getDeletedDate() {
         return deletedDate;
     }
 
-    public void setDeletedDate(Long deletedDate) {
+    public void setDeletedDate(LocalDateTime deletedDate) {
         this.deletedDate = deletedDate;
     }
 }

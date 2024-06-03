@@ -1,0 +1,1 @@
+INSERT INTO "drugstore" (city, latitude, longitude, created_date, deleted_date, id, last_modified_date, name, address, contacts, features) VALUES (0, -18, 47, 0, 0, 1, NULL, 'M-Pharmacie', 'Isotry', NULL, NULL);

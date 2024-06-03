@@ -34,7 +34,7 @@ class PandemonaApplicationTests {
 		drugstore.setId(1L);
 		drugstore.setName("M-Pharmacie");
 		drugstore.setAddress("Example of address");
-		this.drugstoreRepository.save(drugstore);
+		drugstoreRepository.save(drugstore);
 
 		Drugstore createdDrugstore = this.drugstoreRepository.findFirstById(1L);
 		assertThat(createdDrugstore.getId()).isEqualTo(drugstore.getId());
