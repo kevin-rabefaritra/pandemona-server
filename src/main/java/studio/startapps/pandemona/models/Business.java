@@ -5,6 +5,9 @@ import studio.startapps.pandemona.converters.StringListConverter;
 
 import java.util.List;
 
+/**
+ * Represents any business
+ */
 @MappedSuperclass
 public abstract class Business extends BaseEntity {
 

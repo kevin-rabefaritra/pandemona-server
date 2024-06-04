@@ -6,6 +6,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base entity, stores id and audit dates.
+ * Mainly used to store the following data:
+ * (1) id
+ * (2) creation date
+ * (3) last update date
+ * (4) deletion date
+ */
 @MappedSuperclass
 public abstract class BaseEntity {
 

@@ -7,6 +7,9 @@ import jakarta.persistence.ManyToMany;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * On-Duty drugstores
+ */
 @Entity
 public class OnDutyDrugstores extends BaseEntity {
 
@@ -15,6 +18,16 @@ public class OnDutyDrugstores extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Drugstore> drugstores;
+
+    public OnDutyDrugstores(LocalDate startDate, LocalDate endDate, Set<Drugstore> drugstores) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.drugstores = drugstores;
+    }
+
+    public OnDutyDrugstores() {
+
+    }
 
     public LocalDate getStartDate() {
         return startDate;
@@ -38,5 +51,9 @@ public class OnDutyDrugstores extends BaseEntity {
 
     public void setDrugstores(Set<Drugstore> drugstores) {
         this.drugstores = drugstores;
+    }
+
+    public void addDrugstore(Drugstore drugstore) {
+        this.drugstores.add(drugstore);
     }
 }

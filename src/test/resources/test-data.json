@@ -1,0 +1,112 @@
+{
+  "drugstores": [
+    {
+      "id": 1,
+      "name": "M-Pharmacie",
+      "address": "Isotry, Immeuble Mama Ambalavao.",
+      "contacts": [
+        "020 22 668 22"
+      ],
+      "latitude": -1,
+      "longitude": -1,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 2,
+      "name": "Pharmacie Centrale",
+      "address": "Rue de la Gare, Antananarivo.",
+      "contacts": [
+        "020 22 334 45"
+      ],
+      "latitude": -18.879190,
+      "longitude": 47.507905,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 3,
+      "name": "Pharmacie de la Mer",
+      "address": "Boulevard de l'Océan, Toamasina.",
+      "contacts": [
+        "020 53 667 89"
+      ],
+      "latitude": -18.146240,
+      "longitude": 49.402981,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 4,
+      "name": "Pharmacie des Tsingy",
+      "address": "Avenue de l'Indépendance, Morondava.",
+      "contacts": [
+        "020 95 123 45"
+      ],
+      "latitude": -20.283330,
+      "longitude": 44.317560,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 5,
+      "name": "Pharmacie du Soleil",
+      "address": "Route de Majunga, Antsiranana.",
+      "contacts": [
+        "020 82 778 99"
+      ],
+      "latitude": -12.283330,
+      "longitude": 49.283330,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 6,
+      "name": "Pharmacie des Volcans",
+      "address": "Rue des Volcans, Ambatolampy.",
+      "contacts": [
+        "020 44 556 77"
+      ],
+      "latitude": -19.383330,
+      "longitude": 47.433330,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 7,
+      "name": "Pharmacie de la Plaine",
+      "address": "Route de la Plaine, Fianarantsoa.",
+      "contacts": [
+        "020 75 999 88"
+      ],
+      "latitude": -21.454400,
+      "longitude": 47.085100,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 8,
+      "name": "Pharmacie de la Baie",
+      "address": "Avenue de la Baie, Mahajanga.",
+      "contacts": [
+        "020 62 444 22"
+      ],
+      "latitude": -15.670000,
+      "longitude": 46.345000,
+      "features": [],
+      "city": 0
+    },
+    {
+      "id": 9,
+      "name": "Pharmacie des Lacs",
+      "address": "Rue des Lacs, Antsirabe.",
+      "contacts": [
+        "020 22 555 33"
+      ],
+      "latitude": -19.866667,
+      "longitude": 47.033333,
+      "features": [],
+      "city": 0
+    }
+  ]
+}
