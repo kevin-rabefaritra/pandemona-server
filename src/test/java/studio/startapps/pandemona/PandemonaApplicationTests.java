@@ -1,10 +1,8 @@
 package studio.startapps.pandemona;
 
-import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.MapFunction;
-import net.minidev.json.JSONArray;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -13,16 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ResourceUtils;
-import studio.startapps.pandemona.models.City;
 import studio.startapps.pandemona.models.Drugstore;
+import studio.startapps.pandemona.models.OnDutyDrugstores;
 import studio.startapps.pandemona.repositories.DrugstoreRepository;
+import studio.startapps.pandemona.repositories.OnDutyDrugstoresRepository;
 import studio.startapps.pandemona.utils.JsonUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,6 +38,9 @@ class PandemonaApplicationTests {
 	@Autowired
 	private DrugstoreRepository drugstoreRepository;
 
+	@Autowired
+	private OnDutyDrugstoresRepository onDutyDrugstoresRepository;
+
 	@BeforeEach
 	public void setUp() {
 		// Read test-data.json file
@@ -43,8 +48,21 @@ class PandemonaApplicationTests {
 			File testFile = ResourceUtils.getFile("classpath:test-data.json");
 			DocumentContext documentContext = JsonPath.parse(testFile);
 			List<Map<String, Object>> drugstores = documentContext.read("$.drugstores", List.class);
+			List<Map<String, Object>> onDutyDrugstores = documentContext.read("$.ondutyDrugstores", List.class);
 
-			drugstores.forEach((entry) -> drugstoreRepository.save(JsonUtils.toDrugstore(entry)));
+			drugstores.forEach((entry) -> {
+				// Save drugstore
+				drugstoreRepository.save(JsonUtils.toDrugstore(entry));
+			});
+
+			onDutyDrugstores.forEach((entry) -> {
+				OnDutyDrugstores dutyDrugstores = JsonUtils.toOnDutyDrugstores(entry);
+				Set<Drugstore> drugstoreList = drugstoreRepository.findByIdIn(dutyDrugstores.drugstoreIds);
+				dutyDrugstores.setDrugstores(drugstoreList);
+
+				// Save on-duty drugstores
+				onDutyDrugstoresRepository.save(dutyDrugstores);
+			});
 		}
 		catch (IOException e) {
 			logger.error("File not found!", e);
@@ -54,17 +72,36 @@ class PandemonaApplicationTests {
 	@Test
 	void checkRepositories() {
 		assertNotNull(drugstoreRepository);
+		assertNotNull(onDutyDrugstoresRepository);
 	}
 
 	@Test
-	void createDrugstore() {
-		Drugstore drugstore = new Drugstore();
-		drugstore.setId(1L);
-		drugstore.setName("M-Pharmacie");
-		drugstore.setAddress("Example of address");
-		drugstoreRepository.save(drugstore);
+	@Transactional
+	void testGetOnDutyDrugstores() {
+		Optional<OnDutyDrugstores> onDutyDrugstores = onDutyDrugstoresRepository.findById(1L);
+		assertThat(onDutyDrugstores.isPresent()).isEqualTo(true);
 
-		Drugstore createdDrugstore = this.drugstoreRepository.findFirstById(1L);
-		assertThat(createdDrugstore.getId()).isEqualTo(drugstore.getId());
+		OnDutyDrugstores onDutyDrugstores1 = onDutyDrugstores.get();
+		Set<Drugstore> drugstores = onDutyDrugstores1.getDrugstores();
+		for (Drugstore drugstore : drugstores) {
+			assertNotNull(drugstore);
+			assertNotNull(drugstore.getName());
+		}
+	}
+
+	@Test
+	void testGetOnDutyDrugstoresByDate() {
+		LocalDate currentDate = LocalDate.of(2024, Month.JUNE, 6);
+		List<OnDutyDrugstores> onDutyDrugstoresList = onDutyDrugstoresRepository.findBetweenStartDateAndEndDate(currentDate.toString());
+		assertThat(onDutyDrugstoresList.size()).isGreaterThan(0);
+
+		for (OnDutyDrugstores onDutyDrugstores : onDutyDrugstoresList) {
+			assertNotNull(onDutyDrugstores);
+			LocalDate startDate = onDutyDrugstores.getStartDate();
+			LocalDate endDate = onDutyDrugstores.getEndDate();
+
+			assertThat(currentDate).isAfterOrEqualTo(startDate);
+			assertThat(currentDate).isBeforeOrEqualTo(endDate);
+		}
 	}
 }

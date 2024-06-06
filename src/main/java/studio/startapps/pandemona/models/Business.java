@@ -11,21 +11,27 @@ import java.util.List;
 @MappedSuperclass
 public abstract class Business extends BaseEntity {
 
-    @Column(length = 100)
+    @Column(name = "NAME", length = 100)
     private String name;
 
+    @Column(name = "ADDRESS")
     private String address;
 
     @Convert(converter = StringListConverter.class)
     private List<String> contacts;
 
+    @Column(name = "LATITUDE")
     private Double latitude;
+
+    @Column(name = "LONGITUDE")
     private Double longitude;
 
     @Convert(converter = StringListConverter.class)
+    @Column(name = "FEATURES")
     private List<String> features;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "CITY")
     private City city;
 
     public String getName() {

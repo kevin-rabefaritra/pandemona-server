@@ -1,13 +1,16 @@
 package studio.startapps.pandemona.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Drugstores
  */
 @Entity
+@Table(name = "DRUGSTORES")
 public class Drugstore extends Business {
 
     public Drugstore(long id, String name, String address, List<String> contacts, double latitude, double longitude,

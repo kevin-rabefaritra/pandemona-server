@@ -7,8 +7,8 @@
       "contacts": [
         "020 22 668 22"
       ],
-      "latitude": -1,
-      "longitude": -1,
+      "latitude": -1.1,
+      "longitude": -1.1,
       "features": [],
       "city": 0
     },
@@ -107,6 +107,26 @@
       "longitude": 47.033333,
       "features": [],
       "city": 0
+    }
+  ],
+  "ondutyDrugstores": [
+    {
+      "id": 1,
+      "startDate": "2024-06-01",
+      "endDate": "2024-06-08",
+      "drugstores": [1, 2, 4, 6, 8]
+    },
+    {
+      "id": 2,
+      "startDate": "2024-06-08",
+      "endDate": "2024-06-16",
+      "drugstores": [3, 6, 8, 9]
+    },
+    {
+      "id": 3,
+      "startDate": "2024-06-16",
+      "endDate": "2024-06-23",
+      "drugstores": [2, 8, 9]
     }
   ]
 }

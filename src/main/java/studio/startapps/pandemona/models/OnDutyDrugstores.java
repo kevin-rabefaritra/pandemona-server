@@ -1,28 +1,43 @@
 package studio.startapps.pandemona.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
  * On-Duty drugstores
  */
 @Entity
+@Table(name = "ONDUTYDRUGSTORES")
 public class OnDutyDrugstores extends BaseEntity {
 
+    @Column(name = "STARTDATE")
     private LocalDate startDate;
+
+    @Column(name = "ENDDATE")
     private LocalDate endDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Drugstore> drugstores;
 
-    public OnDutyDrugstores(LocalDate startDate, LocalDate endDate, Set<Drugstore> drugstores) {
+    @Transient
+    public List<Long> drugstoreIds;
+
+    public OnDutyDrugstores(Long id, LocalDate startDate, LocalDate endDate, Set<Drugstore> drugstores) {
+        this.setId(id);
         this.startDate = startDate;
         this.endDate = endDate;
         this.drugstores = drugstores;
+    }
+
+    public OnDutyDrugstores(Long id, LocalDate startDate, LocalDate endDate, List<Long> drugstoresIds) {
+        this.setId(id);
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.drugstoreIds = drugstoresIds;
     }
 
     public OnDutyDrugstores() {

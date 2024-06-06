@@ -19,15 +19,18 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private long id;
 
     @CreatedDate
+    @Column(name = "CREATEDDATE")
     private LocalDateTime createdDate;
 
     @LastModifiedDate
+    @Column(name = "LASTMODIFIEDDATE")
     private LocalDateTime lastModifiedDate;
 
-    @Column
+    @Column(name = "DELETEDDATE")
     private LocalDateTime deletedDate = null;
 
     public long getId() {
