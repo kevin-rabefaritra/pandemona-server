@@ -3,7 +3,7 @@ package studio.startapps.pandemona.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +26,6 @@ public class Drugstore extends Business {
     }
 
     public Drugstore() {
-
+        this.setContacts(new ArrayList<>(3));
     }
 }
