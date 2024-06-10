@@ -1,6 +1,7 @@
 package studio.startapps.pandemona.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class DrugstoreController {
     @Autowired
     private DrugstoreRepository drugstoreRepository;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public String index(Model model) {
         Iterable<Drugstore> drugstoreList = this.drugstoreRepository.findAll();
 
@@ -45,7 +46,7 @@ public class DrugstoreController {
     @PostMapping(path = "/create")
     public String createSubmit(@ModelAttribute Drugstore drugstore, Model model) {
         this.drugstoreRepository.save(drugstore);
-        return "redirect:/drugstores/";
+        return "redirect:/drugstores";
     }
 
     @GetMapping(path = "/{drugstoreId}/edit")
@@ -60,6 +61,12 @@ public class DrugstoreController {
     public String updateSubmit(@PathVariable long drugstoreId, @ModelAttribute Drugstore drugstore) {
         drugstore.setId(drugstoreId);
         drugstoreRepository.save(drugstore);
-        return "redirect:/drugstores/";
+        return "redirect:/drugstores";
+    }
+
+    @RequestMapping(path = "/{drugstoreId}", method = RequestMethod.DELETE)
+    public String deleteSubmit(@PathVariable long drugstoreId) {
+        drugstoreRepository.deleteById(drugstoreId);
+        return "redirect:/drugstores";
     }
 }
