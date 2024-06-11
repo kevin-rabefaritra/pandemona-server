@@ -1,18 +1,15 @@
 package studio.startapps.pandemona.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import studio.startapps.pandemona.models.City;
 import studio.startapps.pandemona.models.Drugstore;
 import studio.startapps.pandemona.repositories.DrugstoreRepository;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Controller
 @RequestMapping(path = "/drugstores")
@@ -22,8 +19,15 @@ public class DrugstoreController {
     private DrugstoreRepository drugstoreRepository;
 
     @GetMapping(path = "")
-    public String index(Model model) {
-        Iterable<Drugstore> drugstoreList = this.drugstoreRepository.findAll();
+    public String index(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        Model model
+    ) {
+        Sort sort = Sort.by("id");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Drugstore> drugstoreList = this.drugstoreRepository.findAll(pageable);
 
         model.addAttribute("drugstores", drugstoreList);
         return "drugstores/index";
