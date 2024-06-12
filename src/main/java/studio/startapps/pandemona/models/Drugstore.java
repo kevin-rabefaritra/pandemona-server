@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +27,6 @@ public class Drugstore extends Business {
     }
 
     public Drugstore() {
-        this.setContacts(new ArrayList<>(3));
+        this.setContacts(new ArrayList<>(Arrays.asList("", "", "")));
     }
 }

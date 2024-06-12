@@ -1,8 +1,8 @@
 package studio.startapps.pandemona.services;
 
-import org.springframework.stereotype.Service;
-import studio.startapps.pandemona.repositories.DrugstoreRepository;
+import studio.startapps.pandemona.models.Drugstore;
 
 public interface DrugstoreService {
 
+    void update(long id, Drugstore drugstore);
 }
