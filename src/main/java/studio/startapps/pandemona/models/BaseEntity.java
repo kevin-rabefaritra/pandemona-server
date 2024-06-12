@@ -1,6 +1,8 @@
 package studio.startapps.pandemona.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SoftDelete;
+import org.hibernate.annotations.SoftDeleteType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@SoftDelete(strategy = SoftDeleteType.DELETED)
 public abstract class BaseEntity {
 
     @Id
@@ -31,9 +34,6 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @Column(name = "LASTMODIFIEDDATE")
     private LocalDateTime lastModifiedDate;
-
-    @Column(name = "DELETEDDATE")
-    private LocalDateTime deletedDate = null;
 
     public long getId() {
         return id;
@@ -57,13 +57,5 @@ public abstract class BaseEntity {
 
     public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public LocalDateTime getDeletedDate() {
-        return deletedDate;
-    }
-
-    public void setDeletedDate(LocalDateTime deletedDate) {
-        this.deletedDate = deletedDate;
     }
 }
