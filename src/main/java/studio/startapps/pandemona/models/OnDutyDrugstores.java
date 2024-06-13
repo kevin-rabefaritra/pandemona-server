@@ -1,6 +1,7 @@
 package studio.startapps.pandemona.models;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,9 +16,11 @@ import java.util.Set;
 public class OnDutyDrugstores extends BaseEntity {
 
     @Column(name = "STARTDATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
     @Column(name = "ENDDATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     @ManyToMany(fetch = FetchType.LAZY)

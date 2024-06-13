@@ -15,17 +15,19 @@ import studio.startapps.pandemona.repositories.DrugstoreRepository;
 @RequestMapping(path = "/drugstores")
 public class DrugstoreController {
 
-    @Autowired
-    private DrugstoreRepository drugstoreRepository;
+    private final static int PAGE_SIZE = 10;
+    private final static String SORT_BY = "id";
+
+    private final DrugstoreRepository drugstoreRepository;
+
+    public DrugstoreController(DrugstoreRepository drugstoreRepository) {
+        this.drugstoreRepository = drugstoreRepository;
+    }
 
     @GetMapping(path = "")
-    public String index(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size,
-        Model model
-    ) {
-        Sort sort = Sort.by("id");
-        Pageable pageable = PageRequest.of(page, size, sort);
+    public String index(@RequestParam(defaultValue = "0") int page, Model model) {
+        Sort sort = Sort.by(SORT_BY);
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE, sort);
 
         Page<Drugstore> drugstoreList = this.drugstoreRepository.findAll(pageable);
 
@@ -48,7 +50,7 @@ public class DrugstoreController {
      * Saves a new drugstore
      */
     @PostMapping(path = "/create")
-    public String createSubmit(@ModelAttribute Drugstore drugstore, Model model) {
+    public String createSubmit(@ModelAttribute Drugstore drugstore) {
         this.drugstoreRepository.save(drugstore);
         return "redirect:/drugstores";
     }

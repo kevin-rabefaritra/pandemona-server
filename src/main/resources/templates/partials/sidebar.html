@@ -1,4 +1,4 @@
-<html >
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <body>
 	<div th:fragment="sidebar" th:remove="tag">
@@ -48,10 +48,10 @@
 										<a href="#" class="nav-link" data-key="t-analytics"> Analytics </a>
 									</li>
 									<li class="nav-item">
-										<a href="/drugstores" class="nav-link" data-key="t-crm"> Drugstores </a>
+										<a th:href="@{/drugstores}" class="nav-link" data-key="t-crm"> Drugstores </a>
 									</li>
 									<li class="nav-item">
-										<a href="#" class="nav-link" data-key="t-ecommerce"> On-duty drugstores </a>
+										<a th:href="@{/onduty-drugstores}" class="nav-link" data-key="t-ecommerce"> On-duty drugstores </a>
 									</li>
 									<li class="nav-item">
 										<a href="#" class="nav-link" data-key="t-crypto"> Doctors </a>

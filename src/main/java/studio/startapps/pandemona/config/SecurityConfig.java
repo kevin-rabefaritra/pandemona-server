@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
             .authorizeHttpRequests(authorizeRequests -> {
-                authorizeRequests.requestMatchers("/drugstores/**", "/home").authenticated();
+                authorizeRequests.requestMatchers("/drugstores/**", "/onduty-drugstores/**", "/home").authenticated();
                 authorizeRequests.requestMatchers("/assets/**").permitAll(); // allow all assets
                 authorizeRequests.requestMatchers("/login", "/logout").permitAll();
             })

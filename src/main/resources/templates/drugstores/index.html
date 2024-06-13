@@ -22,7 +22,7 @@
 					<div class="card-header align-items-center d-flex">
 						<h4 class="card-title mb-0 flex-grow-1">Drugstores</h4>
 						<div class="flex-shrink-0">
-							<a href="/drugstores/create" class="btn btn-soft-success">
+							<a th:href="@{/drugstores/create}" class="btn btn-soft-success">
 								<i class="ri-add-line align-middle"></i> New drugstore
 							</a>
 						</div>
@@ -56,8 +56,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div
-									class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
+							<div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
 								<div class="col-sm">
 									<div class="text-muted">
 										Showing <span class="fw-semibold" th:text="${drugstores.size}"></span> of <span
