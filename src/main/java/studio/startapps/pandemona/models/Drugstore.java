@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Drugstores
@@ -28,5 +29,21 @@ public class Drugstore extends Business {
 
     public Drugstore() {
         this.setContacts(new ArrayList<>(Arrays.asList("", "", "")));
+    }
+
+    @Override
+    public boolean equals(Object b) {
+        if (b == null) {
+            return false;
+        }
+        if (!(b instanceof Drugstore b_)) {
+            return false;
+        }
+        return Objects.equals(this.getId(), b_.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.valueOf(this.getId()).hashCode() * this.getName().hashCode();
     }
 }
