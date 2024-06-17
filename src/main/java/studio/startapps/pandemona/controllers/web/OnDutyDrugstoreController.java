@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.controllers;
+package studio.startapps.pandemona.controllers.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ import studio.startapps.pandemona.repositories.DrugstoreRepository;
 import studio.startapps.pandemona.repositories.OnDutyDrugstoresRepository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @RequestMapping("/onduty-drugstores")

@@ -29,6 +29,7 @@ public class SecurityConfig {
                 authorizeRequests.requestMatchers("/drugstores/**", "/onduty-drugstores/**", "/home").authenticated();
                 authorizeRequests.requestMatchers("/assets/**").permitAll(); // allow all assets
                 authorizeRequests.requestMatchers("/login", "/logout").permitAll();
+                authorizeRequests.requestMatchers("/api/v3/*").permitAll();
             })
             .formLogin((formLogin) -> {
                 formLogin
