@@ -70,6 +70,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+					<mainClass>studio.startapps.pandemona.PandemonaApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
