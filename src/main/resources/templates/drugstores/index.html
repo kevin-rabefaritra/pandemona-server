@@ -36,6 +36,7 @@
 										<tr>
 											<th scope="col">ID</th>
 											<th scope="col">Name</th>
+											<th scope="col">City</th>
 											<th scope="col">Address</th>
 											<th scope="col">Action</th>
 										</tr>
@@ -44,6 +45,7 @@
 										<tr th:each="drugstore : ${drugstores}">
 											<td th:text="${drugstore.id}"></td>
 											<td th:text="${drugstore.name}"></td>
+											<td th:text="${drugstore.city}"></td>
 											<td th:text="${drugstore.address}"></td>
 											<td>
 												<button type="button" class="btn btn-light">Details</button>

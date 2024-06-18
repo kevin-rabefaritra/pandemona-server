@@ -41,7 +41,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="onDutyDrugstores : ${onDutyDrugstoresList}">
-											<td th:utext="'From <b>' + ${onDutyDrugstores.startDate} + '</b><br/>to <b>' + ${onDutyDrugstores.endDate} + '</b>'"></td>
+											<td th:utext="'From <b>' + ${#temporals.format(onDutyDrugstores.startDate, 'd LLLL uuuu')} + '</b><br/>to <b>' + ${#temporals.format(onDutyDrugstores.endDate, 'd LLLL uuuu')} + '</b>'"></td>
 											<td>
 												<ul>
 													<li th:each="drugstore : ${onDutyDrugstores.drugstores}" th:text="${drugstore.name}"></li>
