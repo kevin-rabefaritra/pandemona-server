@@ -1,5 +1,6 @@
 package studio.startapps.pandemona.repositories;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,8 @@ public interface DrugstoreRepository extends ListPagingAndSortingRepository<Drug
 
     Set<Drugstore> findByIdIn(List<Long> ids);
 
-    Set<Drugstore> findByCreatedDateGreaterThanEqual(LocalDateTime localDateTime);
+    Set<Drugstore> findByLastModifiedDateGreaterThanEqual(LocalDateTime localDateTime);
+
+    @Query(value = "SELECT * FROM DRUGSTORES WHERE deleted = 1", nativeQuery = true)
+    Set<Drugstore> findAllDeleted();
 }

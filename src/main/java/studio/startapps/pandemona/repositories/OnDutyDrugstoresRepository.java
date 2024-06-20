@@ -15,5 +15,8 @@ public interface OnDutyDrugstoresRepository extends CrudRepository<OnDutyDrugsto
     @Query(value = "SELECT * FROM ONDUTYDRUGSTORES WHERE startDate <= ?1 AND endDate >= ?1", nativeQuery = true)
     List<OnDutyDrugstores> findBetweenStartDateAndEndDate(String date);
 
-    List<OnDutyDrugstores> findByCreatedDateGreaterThanEqual(LocalDateTime localDateTime);
+    List<OnDutyDrugstores> findByLastModifiedDateGreaterThanEqual(LocalDateTime localDateTime);
+
+    @Query(value = "SELECT * FROM ONDUTYDRUGSTORES WHERE deleted = 1", nativeQuery = true)
+    List<OnDutyDrugstores> findAllDeleted();
 }
