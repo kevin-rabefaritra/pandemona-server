@@ -23,6 +23,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(path = "/api/v3")
+@Deprecated
 public class MobileControllerV3 {
 
     private int appVersion;
