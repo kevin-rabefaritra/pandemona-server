@@ -1,7 +1,9 @@
-package studio.startapps.pandemona.models;
+package studio.startapps.pandemona.drugstore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import studio.startapps.pandemona.util.models.Business;
+import studio.startapps.pandemona.util.models.City;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +14,7 @@ import java.util.Objects;
  * Drugstores
  */
 @Entity
-@Table(name = "DRUGSTORES")
+@Table(name = "drugstore")
 public class Drugstore extends Business {
 
     public Drugstore(long id, String name, String address, List<String> contacts, double latitude, double longitude,

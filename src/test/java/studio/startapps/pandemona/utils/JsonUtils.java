@@ -1,13 +1,11 @@
 package studio.startapps.pandemona.utils;
 
 import net.minidev.json.JSONArray;
-import studio.startapps.pandemona.models.City;
-import studio.startapps.pandemona.models.Drugstore;
-import studio.startapps.pandemona.models.OnDutyDrugstores;
+import studio.startapps.pandemona.util.models.City;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstores;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 

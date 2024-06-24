@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.models;
+package studio.startapps.pandemona.util.models;
 
 public enum City {
     ANTANANARIVO,

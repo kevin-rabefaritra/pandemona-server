@@ -1,11 +1,11 @@
-package studio.startapps.pandemona.models;
+package studio.startapps.pandemona.ondutydrugstores;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.thymeleaf.util.DateUtils;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.util.models.BaseEntity;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -13,14 +13,12 @@ import java.util.Set;
  * On-Duty drugstores
  */
 @Entity
-@Table(name = "ONDUTYDRUGSTORES")
+@Table(name = "ondutydrugstores")
 public class OnDutyDrugstores extends BaseEntity {
 
-    @Column(name = "STARTDATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @Column(name = "ENDDATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 

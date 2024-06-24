@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.models;
+package studio.startapps.pandemona.util.models;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SoftDelete;
@@ -24,16 +24,15 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private long id;
 
     @CreatedDate
-    @Column(name = "CREATEDDATE")
-    private LocalDateTime createdDate;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "LASTMODIFIEDDATE")
-    private LocalDateTime lastModifiedDate;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public long getId() {
         return id;
@@ -43,19 +42,19 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

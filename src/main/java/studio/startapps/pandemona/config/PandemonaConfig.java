@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import studio.startapps.pandemona.repositories.DrugstoreRepository;
-import studio.startapps.pandemona.services.DrugstoreService;
-import studio.startapps.pandemona.services.internal.DrugstoreServiceImpl;
+import studio.startapps.pandemona.drugstore.DrugstoreRepository;
+import studio.startapps.pandemona.drugstore.DrugstoreService;
+import studio.startapps.pandemona.drugstore.internal.DrugstoreServiceImpl;
 
 @Configuration
 @Import({SecurityConfig.class})

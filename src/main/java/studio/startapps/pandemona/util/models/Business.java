@@ -1,7 +1,8 @@
-package studio.startapps.pandemona.models;
+package studio.startapps.pandemona.util.models;
 
 import jakarta.persistence.*;
-import studio.startapps.pandemona.converters.StringListConverter;
+import studio.startapps.pandemona.util.converters.CityConverter;
+import studio.startapps.pandemona.util.converters.StringListConverter;
 
 import java.util.List;
 
@@ -11,27 +12,19 @@ import java.util.List;
 @MappedSuperclass
 public abstract class Business extends BaseEntity {
 
-    @Column(name = "NAME", length = 100)
     private String name;
 
-    @Column(name = "ADDRESS")
     private String address;
 
-    @Convert(converter = StringListConverter.class)
     private List<String> contacts;
 
-    @Column(name = "LATITUDE")
     private Double latitude;
 
-    @Column(name = "LONGITUDE")
     private Double longitude;
 
-    @Convert(converter = StringListConverter.class)
-    @Column(name = "FEATURES")
     private List<String> features;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "CITY")
+    @Convert(converter = CityConverter.class)
     private City city;
 
     public String getName() {

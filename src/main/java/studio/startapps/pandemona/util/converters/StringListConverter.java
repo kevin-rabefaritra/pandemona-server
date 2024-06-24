@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.converters;
+package studio.startapps.pandemona.util.converters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

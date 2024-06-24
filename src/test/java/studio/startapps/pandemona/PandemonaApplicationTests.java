@@ -8,23 +8,21 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ResourceUtils;
-import studio.startapps.pandemona.models.Drugstore;
-import studio.startapps.pandemona.models.OnDutyDrugstores;
-import studio.startapps.pandemona.repositories.DrugstoreRepository;
-import studio.startapps.pandemona.repositories.OnDutyDrugstoresRepository;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.drugstore.DrugstoreService;
+import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstores;
+import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstoresRepository;
 import studio.startapps.pandemona.utils.JsonUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,7 +34,7 @@ class PandemonaApplicationTests {
 	protected final Logger logger = LoggerFactory.getLogger(PandemonaApplicationTests.class);
 
 	@Autowired
-	private DrugstoreRepository drugstoreRepository;
+	private DrugstoreService drugstoreService;
 
 	@Autowired
 	private OnDutyDrugstoresRepository onDutyDrugstoresRepository;
@@ -52,12 +50,12 @@ class PandemonaApplicationTests {
 
 			drugstores.forEach((entry) -> {
 				// Save drugstore
-				drugstoreRepository.save(JsonUtils.toDrugstore(entry));
+				drugstoreService.save(JsonUtils.toDrugstore(entry));
 			});
 
 			onDutyDrugstores.forEach((entry) -> {
 				OnDutyDrugstores dutyDrugstores = JsonUtils.toOnDutyDrugstores(entry);
-				Set<Drugstore> drugstoreList = drugstoreRepository.findByIdIn(dutyDrugstores.drugstoreIds);
+				Set<Drugstore> drugstoreList = new HashSet<>(drugstoreService.findByIdIn(dutyDrugstores.drugstoreIds));
 				dutyDrugstores.setDrugstores(drugstoreList);
 
 				// Save on-duty drugstores
@@ -71,7 +69,7 @@ class PandemonaApplicationTests {
 
 	@Test
 	void checkRepositories() {
-		assertNotNull(drugstoreRepository);
+		assertNotNull(drugstoreService);
 		assertNotNull(onDutyDrugstoresRepository);
 	}
 

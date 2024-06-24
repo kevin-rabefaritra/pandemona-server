@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.controllers.web;
+package studio.startapps.pandemona.drugstore;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,8 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import studio.startapps.pandemona.models.Drugstore;
-import studio.startapps.pandemona.repositories.DrugstoreRepository;
 
 @Controller
 @RequestMapping(path = "/drugstores")
@@ -17,10 +15,10 @@ public class DrugstoreController {
     private final static int PAGE_SIZE = 10;
     private final static String SORT_BY = "id";
 
-    private final DrugstoreRepository drugstoreRepository;
+    private final DrugstoreService drugstoreService;
 
-    public DrugstoreController(DrugstoreRepository drugstoreRepository) {
-        this.drugstoreRepository = drugstoreRepository;
+    public DrugstoreController(DrugstoreService drugstoreService) {
+        this.drugstoreService = drugstoreService;
     }
 
     @GetMapping(path = "")
@@ -28,7 +26,7 @@ public class DrugstoreController {
         Sort sort = Sort.by(SORT_BY);
         Pageable pageable = PageRequest.of(page, PAGE_SIZE, sort);
 
-        Page<Drugstore> drugstoreList = this.drugstoreRepository.findAll(pageable);
+        Page<Drugstore> drugstoreList = this.drugstoreService.findAll(pageable);
 
         model.addAttribute("drugstores", drugstoreList);
         return "drugstores/index";
@@ -50,13 +48,13 @@ public class DrugstoreController {
      */
     @PostMapping(path = "/create")
     public String createSubmit(@ModelAttribute Drugstore drugstore) {
-        this.drugstoreRepository.save(drugstore);
+        this.drugstoreService.save(drugstore);
         return "redirect:/drugstores";
     }
 
     @GetMapping(path = "/{drugstoreId}/edit")
     public String updateForm(@PathVariable long drugstoreId, Model model) {
-        Drugstore drugstore = this.drugstoreRepository.findFirstById(drugstoreId);
+        Drugstore drugstore = this.drugstoreService.findFirstById(drugstoreId);
         model.addAttribute("title", "Edit drugstore");
         model.addAttribute("drugstore", drugstore);
         return "drugstores/form";
@@ -65,13 +63,13 @@ public class DrugstoreController {
     @PostMapping(path = "/{drugstoreId}/edit")
     public String updateSubmit(@PathVariable long drugstoreId, @ModelAttribute Drugstore drugstore) {
         drugstore.setId(drugstoreId);
-        drugstoreRepository.save(drugstore);
+        drugstoreService.save(drugstore);
         return "redirect:/drugstores";
     }
 
     @RequestMapping(path = "/{drugstoreId}", method = RequestMethod.DELETE)
     public String deleteSubmit(@PathVariable long drugstoreId) {
-        drugstoreRepository.deleteById(drugstoreId);
+        drugstoreService.deleteById(drugstoreId);
         return "redirect:/drugstores";
     }
 }

@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.controllers.web;
+package studio.startapps.pandemona.ondutydrugstores;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import studio.startapps.pandemona.models.Drugstore;
-import studio.startapps.pandemona.models.OnDutyDrugstores;
-import studio.startapps.pandemona.repositories.DrugstoreRepository;
-import studio.startapps.pandemona.repositories.OnDutyDrugstoresRepository;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.drugstore.DrugstoreService;
 
 import java.time.LocalDate;
 
@@ -25,17 +23,17 @@ public class OnDutyDrugstoreController {
     private final static int PAGE_SIZE = 10;
     private final static String SORT_BY = "endDate";
 
-    private final OnDutyDrugstoresRepository onDutyDrugstoresRepository;
-    private final DrugstoreRepository drugstoreRepository;
+    private final OnDutyDrugstoresService onDutyDrugstoresService;
+    private final DrugstoreService drugstoreService;
 
     public OnDutyDrugstoreController(
-            OnDutyDrugstoresRepository onDutyDrugstoresRepository,
-            DrugstoreRepository drugstoreRepository
+            OnDutyDrugstoresService onDutyDrugstoresService,
+            DrugstoreService drugstoreService
     ) {
         this.logger = LoggerFactory.getLogger(this.getClass());
 
-        this.onDutyDrugstoresRepository = onDutyDrugstoresRepository;
-        this.drugstoreRepository = drugstoreRepository;
+        this.onDutyDrugstoresService = onDutyDrugstoresService;
+        this.drugstoreService = drugstoreService;
     }
 
     @GetMapping("")
@@ -43,7 +41,7 @@ public class OnDutyDrugstoreController {
         Sort sort = Sort.by(SORT_BY).descending();
         Pageable pageable = PageRequest.of(page, PAGE_SIZE, sort);
 
-        Page<OnDutyDrugstores> onDutyDrugstores = onDutyDrugstoresRepository.findAll(pageable);
+        Page<OnDutyDrugstores> onDutyDrugstores = onDutyDrugstoresService.findAll(pageable);
         model.addAttribute("onDutyDrugstoresList", onDutyDrugstores);
         return "onduty-drugstores/index";
     }
@@ -54,7 +52,7 @@ public class OnDutyDrugstoreController {
         onDutyDrugstores.setStartDate(LocalDate.now());
         onDutyDrugstores.setEndDate(LocalDate.now().plusDays(7));
 
-        Iterable<Drugstore> drugstoreList = drugstoreRepository.findAll();
+        Iterable<Drugstore> drugstoreList = drugstoreService.findAll();
 
         model.addAttribute("onDutyDrugstores", onDutyDrugstores);
         model.addAttribute("drugstores", drugstoreList);
@@ -64,14 +62,14 @@ public class OnDutyDrugstoreController {
 
     @PostMapping("/create")
     public String createSubmit(@ModelAttribute OnDutyDrugstores onDutyDrugstores) {
-        onDutyDrugstoresRepository.save(onDutyDrugstores);
+        onDutyDrugstoresService.save(onDutyDrugstores);
         return "redirect:/onduty-drugstores";
     }
 
     @GetMapping("/{onDutyDrugstoresId}/edit")
     public String updateForm(@PathVariable long onDutyDrugstoresId, Model model) {
-        OnDutyDrugstores onDutyDrugstores = onDutyDrugstoresRepository.findById(onDutyDrugstoresId).get();
-        Iterable<Drugstore> drugstores = drugstoreRepository.findAll();
+        OnDutyDrugstores onDutyDrugstores = onDutyDrugstoresService.findById(onDutyDrugstoresId).get();
+        Iterable<Drugstore> drugstores = drugstoreService.findAll();
 
         model.addAttribute("onDutyDrugstores", onDutyDrugstores);
         model.addAttribute("drugstores", drugstores);
@@ -81,13 +79,13 @@ public class OnDutyDrugstoreController {
     @PostMapping("/{onDutyDrugstoresId}/edit")
     public String updateSubmit(@PathVariable long onDutyDrugstoresId, @ModelAttribute OnDutyDrugstores onDutyDrugstores) {
         onDutyDrugstores.setId(onDutyDrugstoresId);
-        onDutyDrugstoresRepository.save(onDutyDrugstores);
+        onDutyDrugstoresService.save(onDutyDrugstores);
         return "redirect:/onduty-drugstores";
     }
 
     @RequestMapping(value = "/{onDutyDrugstoresId}", method = RequestMethod.DELETE)
     public String delete(@PathVariable long onDutyDrugstoresId) {
-        onDutyDrugstoresRepository.deleteById(onDutyDrugstoresId);
+        onDutyDrugstoresService.deleteById(onDutyDrugstoresId);
         return "redirect:/onduty-drugstores";
     }
 }

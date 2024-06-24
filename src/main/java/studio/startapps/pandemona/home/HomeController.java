@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.controllers.web;
+package studio.startapps.pandemona.home;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
