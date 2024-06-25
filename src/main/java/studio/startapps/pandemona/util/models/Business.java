@@ -16,12 +16,14 @@ public abstract class Business extends BaseEntity {
 
     private String address;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> contacts;
 
     private Double latitude;
 
     private Double longitude;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> features;
 
     @Convert(converter = CityConverter.class)

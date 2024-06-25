@@ -1,8 +1,11 @@
 package studio.startapps.pandemona.drugstore.internal;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.drugstore.Drugstore;
 import studio.startapps.pandemona.drugstore.DrugstoreRepository;
 import studio.startapps.pandemona.drugstore.DrugstoreService;
@@ -10,11 +13,15 @@ import studio.startapps.pandemona.drugstore.DrugstoreService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public class DrugstoreServiceImpl implements DrugstoreService {
 
     private DrugstoreRepository drugstoreRepository;
 
+    private Logger logger;
+
     public DrugstoreServiceImpl(DrugstoreRepository drugstoreRepository) {
+        this.logger = LoggerFactory.getLogger(this.getClass());
         this.drugstoreRepository = drugstoreRepository;
     }
 

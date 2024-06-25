@@ -9,7 +9,7 @@ create table if not exists drugstore (
     city        smallint,
     created_at  timestamp,
     updated_at  timestamp,
-    is_deleted  boolean default false
+    deleted     boolean default false
 );
 
 create table if not exists onduty_drugstores (
@@ -18,7 +18,7 @@ create table if not exists onduty_drugstores (
     end_date    date not null,
     created_at  timestamp,
     updated_at  timestamp,
-    is_deleted  boolean default false
+    deleted     boolean default false
 );
 
 create table if not exists onduty_drugstores_drugstore (

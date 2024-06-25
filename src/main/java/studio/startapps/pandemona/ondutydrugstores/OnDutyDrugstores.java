@@ -13,7 +13,7 @@ import java.util.Set;
  * On-Duty drugstores
  */
 @Entity
-@Table(name = "ondutydrugstores")
+@Table(name = "onduty_drugstores")
 public class OnDutyDrugstores extends BaseEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -22,7 +22,12 @@ public class OnDutyDrugstores extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+        name = "onduty_drugstores_drugstore",
+        joinColumns = @JoinColumn(name = "onduty_drugstores_id"),
+        inverseJoinColumns = @JoinColumn(name = "drugstore_id")
+    )
     private Set<Drugstore> drugstores;
 
     @Transient
