@@ -18,8 +18,6 @@ public interface DrugstoreService {
 
     List<Drugstore> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime);
 
-    List<Drugstore> findByIdIn(List<Long> ids);
-
     List<Drugstore> findAllDeleted();
 
     Drugstore findFirstById(long drugstoreId);

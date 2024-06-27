@@ -30,7 +30,7 @@ public class Drugstore extends Business {
     }
 
     public Drugstore() {
-        this.setContacts(new ArrayList<>(Arrays.asList("", "", "")));
+        this.setContacts(new ArrayList<>(3));
     }
 
     @Override

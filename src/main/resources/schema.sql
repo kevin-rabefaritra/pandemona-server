@@ -2,7 +2,7 @@ create table if not exists drugstore (
     id          serial primary key,
     name        varchar(100) not null,
     address     varchar(255) not null,
-    contacts    varchar(255) not null,
+    contacts    varchar(255) default null,
     latitude    double precision default 0,
     longitude   double precision default 0,
     features    varchar(255) default null,

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import studio.startapps.pandemona.util.converters.CityConverter;
 import studio.startapps.pandemona.util.converters.StringListConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,11 @@ public abstract class Business extends BaseEntity {
     }
 
     public List<String> getContacts() {
-        return contacts;
+        List<String> result = this.contacts != null ? new ArrayList<>(this.contacts) : new ArrayList<>(3);
+        while (result.size() < 3) {
+            result.add("");
+        }
+        return result;
     }
 
     public void setContacts(List<String> contacts) {
@@ -83,5 +88,9 @@ public abstract class Business extends BaseEntity {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public void addContact(String contact) {
+        this.contacts.add(contact);
     }
 }

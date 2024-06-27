@@ -60,11 +60,6 @@ public class DrugstoreServiceImpl implements DrugstoreService {
         return this.drugstoreRepository.findByUpdatedAtGreaterThanEqual(localDateTime);
     }
 
-    @Override
-    public List<Drugstore> findByIdIn(List<Long> ids) {
-        return this.drugstoreRepository.findByIdIn(ids);
-    }
-
     public List<Drugstore> findAllDeleted() {
         return this.drugstoreRepository.findAllDeleted();
     }

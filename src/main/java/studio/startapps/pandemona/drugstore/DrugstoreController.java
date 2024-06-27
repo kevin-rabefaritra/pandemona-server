@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/drugstores")
 public class DrugstoreController {
 
-    private final static int PAGE_SIZE = 10;
+    private final static int PAGE_SIZE = 20;
     private final static String SORT_BY = "id";
 
     private final DrugstoreService drugstoreService;
@@ -55,6 +55,7 @@ public class DrugstoreController {
     @GetMapping(path = "/{drugstoreId}/edit")
     public String updateForm(@PathVariable long drugstoreId, Model model) {
         Drugstore drugstore = this.drugstoreService.findFirstById(drugstoreId);
+
         model.addAttribute("title", "Edit drugstore");
         model.addAttribute("drugstore", drugstore);
         return "drugstores/form";
