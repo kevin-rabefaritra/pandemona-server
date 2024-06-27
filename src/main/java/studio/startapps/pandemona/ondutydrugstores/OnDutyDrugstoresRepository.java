@@ -11,11 +11,14 @@ import java.util.List;
 @Repository
 public interface OnDutyDrugstoresRepository extends CrudRepository<OnDutyDrugstores, Long>, ListPagingAndSortingRepository<OnDutyDrugstores, Long> {
 
-    @Query(value = "SELECT * FROM onduty_drugstores WHERE startDate <= ?1 AND endDate >= ?1", nativeQuery = true)
+    @Query(value = "SELECT o FROM OnDutyDrugstores o WHERE o.startDate <= ?1 AND o.endDate >= ?1")
     List<OnDutyDrugstores> findBetweenStartDateAndEndDate(String date);
 
     List<OnDutyDrugstores> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime);
 
-    @Query(value = "SELECT * FROM onduty_drugstores WHERE deleted = true", nativeQuery = true)
+    @Query(value = "SELECT o FROM OnDutyDrugstores o")
     List<OnDutyDrugstores> findAllDeleted();
+
+    @Query(value = "SELECT o FROM OnDutyDrugstores o ORDER BY o.endDate DESC LIMIT 1")
+    OnDutyDrugstores findLatestOnDutyDrugstores();
 }

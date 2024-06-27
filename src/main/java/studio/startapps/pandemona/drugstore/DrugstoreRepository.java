@@ -17,6 +17,6 @@ public interface DrugstoreRepository extends ListPagingAndSortingRepository<Drug
 
     List<Drugstore> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime);
 
-    @Query(value = "SELECT * FROM drugstore WHERE deleted = true", nativeQuery = true)
+    @Query(value = "SELECT d FROM Drugstore d")
     List<Drugstore> findAllDeleted();
 }

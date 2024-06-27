@@ -1,13 +1,14 @@
 package studio.startapps.pandemona.ondutydrugstores.internal;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstores;
 import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstoresRepository;
 import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstoresService;
+import studio.startapps.pandemona.util.DateUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +50,17 @@ public class OnDutyDrugstoresServiceImpl implements OnDutyDrugstoresService {
     @Override
     public Iterable<OnDutyDrugstores> findAllDeleted() {
         return this.onDutyDrugstoresRepository.findAllDeleted();
+    }
+
+    @Override
+    public LocalDate getNextStartDate() {
+        OnDutyDrugstores onDutyDrugstores = this.onDutyDrugstoresRepository.findLatestOnDutyDrugstores();
+        if (onDutyDrugstores != null) {
+            return onDutyDrugstores.getEndDate();
+        }
+        else {
+            LocalDate today = LocalDate.now();
+            return DateUtils.nextSaturdayAfter(today);
+        }
     }
 }

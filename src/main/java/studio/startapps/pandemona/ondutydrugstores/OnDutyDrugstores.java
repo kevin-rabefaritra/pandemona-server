@@ -17,9 +17,11 @@ import java.util.Set;
 public class OnDutyDrugstores extends BaseEntity {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "end_date")
     private LocalDate endDate;
 
     @ManyToMany

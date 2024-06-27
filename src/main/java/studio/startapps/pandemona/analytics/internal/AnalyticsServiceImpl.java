@@ -38,10 +38,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public List<Map.Entry<String, Integer>> getEndpointsCalls(List<String> endpoints) {
+    public List<Map.Entry<String, Integer>> getEndpointsCalls(String[] endpoints) {
         List<Map.Entry<String, Integer>> result = new ArrayList<>();
 
-        endpoints.forEach((endpointURI) -> {
+        List.of(endpoints).forEach((endpointURI) -> {
             MetricsEndpoint.MetricDescriptor metricDescriptor = this.metricsEndpoint.metric("http.server.requests", List.of("uri:" + endpointURI));
             if (metricDescriptor != null) {
                 for (MetricsEndpoint.Sample sample : metricDescriptor.getMeasurements()) {

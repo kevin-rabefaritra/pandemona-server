@@ -10,7 +10,7 @@ public class PandemonaApplication {
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(PandemonaApplication.class);
 
-		// Required for StartupEndpoint to record events
+		// Required for StartupEndpoint to record startup event
 		application.setApplicationStartup(new BufferingApplicationStartup(1024));
 		application.run(args);
 	}

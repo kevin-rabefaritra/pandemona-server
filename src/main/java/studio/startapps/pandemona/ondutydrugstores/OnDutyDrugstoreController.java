@@ -48,14 +48,20 @@ public class OnDutyDrugstoreController {
 
     @GetMapping("/create")
     public String createForm(Model model) {
+        LocalDate defaultStartDate = this.onDutyDrugstoresService.getNextStartDate();
+        LocalDate defaultEndDate = defaultStartDate.plusWeeks(1);
+
         OnDutyDrugstores onDutyDrugstores = new OnDutyDrugstores();
-        onDutyDrugstores.setStartDate(LocalDate.now());
-        onDutyDrugstores.setEndDate(LocalDate.now().plusDays(7));
+        onDutyDrugstores.setStartDate(defaultStartDate);
+        onDutyDrugstores.setEndDate(defaultEndDate);
 
         Iterable<Drugstore> drugstoreList = drugstoreService.findAll();
 
         model.addAttribute("onDutyDrugstores", onDutyDrugstores);
         model.addAttribute("drugstores", drugstoreList);
+        model.addAttribute("defaultStartDate", defaultStartDate);
+        model.addAttribute("defaultEndDate", defaultEndDate);
+
         model.addAttribute("title", "Add on-duty drugstores");
         return "onduty-drugstores/form";
     }
