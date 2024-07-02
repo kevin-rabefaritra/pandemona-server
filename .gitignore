@@ -43,3 +43,6 @@ secrets.yml
 node_modules
 src/main/resources/application.properties
 *.sql
+compose.yaml
+src/main/resources/application-prod.properties
+docker-compose.yaml

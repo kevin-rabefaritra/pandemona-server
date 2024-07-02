@@ -16,7 +16,7 @@ public interface OnDutyDrugstoresRepository extends CrudRepository<OnDutyDrugsto
 
     List<OnDutyDrugstores> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime);
 
-    @Query(value = "SELECT o FROM OnDutyDrugstores o")
+    @Query(value = "SELECT * FROM onduty_drugstores WHERE deleted = true", nativeQuery = true)
     List<OnDutyDrugstores> findAllDeleted();
 
     @Query(value = "SELECT o FROM OnDutyDrugstores o ORDER BY o.endDate DESC LIMIT 1")
