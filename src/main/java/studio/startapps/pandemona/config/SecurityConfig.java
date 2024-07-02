@@ -25,6 +25,7 @@ public class SecurityConfig {
                 authorizeRequests.requestMatchers("/assets/**").permitAll(); // allow all assets
                 authorizeRequests.requestMatchers("/login", "/logout").permitAll();
                 authorizeRequests.requestMatchers("/api/v3/**").permitAll();
+                authorizeRequests.requestMatchers("/").permitAll();
             })
             .formLogin((formLogin) -> {
                 formLogin

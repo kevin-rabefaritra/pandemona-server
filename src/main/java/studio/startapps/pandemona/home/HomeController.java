@@ -17,4 +17,9 @@ public class HomeController {
     public String home() {
         return "redirect:/analytics";
     }
+
+    @GetMapping("")
+    public String root() {
+        return "redirect:/home";
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import studio.startapps.pandemona.drugstore.Drugstore;
 import studio.startapps.pandemona.drugstore.DrugstoreService;
 import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstoresService;
+import studio.startapps.pandemona.util.converters.StringListConverter;
 import studio.startapps.pandemona.util.models.BaseEntity;
 import studio.startapps.pandemona.ondutydrugstores.OnDutyDrugstores;
 import studio.startapps.pandemona.util.DateUtils;
@@ -57,6 +58,8 @@ public class DrugstoreAPIControllerV3 {
         Iterable<Drugstore> drugstores = this.drugstoreService.findByUpdatedAtGreaterThanEqual(lastUpdateDate);
         Iterable<OnDutyDrugstores> onDutyDrugstores = this.onDutyDrugstoresService.findByUpdatedAtGreaterThanEqual(lastUpdateDate);
 
+        StringListConverter stringListConverter = new StringListConverter();
+
         // Change the format of drugstores to match legacy version
         List<Map<String, Object>> formattedDrugstores = StreamSupport.stream(drugstores.spliterator(), false)
             .map((item) -> {
@@ -64,7 +67,7 @@ public class DrugstoreAPIControllerV3 {
                 mappedItem.put("id", item.getId());
                 mappedItem.put("n", item.getName());
                 mappedItem.put("a", item.getAddress());
-                mappedItem.put("c", String.join(";", item.getContacts()));
+                mappedItem.put("c", stringListConverter.convertToDatabaseColumn(item.getContacts()));
                 mappedItem.put("lt", item.getLatitude());
                 mappedItem.put("ln", item.getLongitude());
                 mappedItem.put("ci", item.getCity().ordinal() + 10); // legacy city value = City ordinal value + 10
@@ -103,6 +106,7 @@ public class DrugstoreAPIControllerV3 {
 
         result.put("dr_r", deletedDrugstoreIds);
         result.put("an_dr_r", deletedOnDutyDrugstoreIds);
+        result.put("en", List.of()); // leave empty
         result.put("en_r", List.of()); // leave empty
         result.put("cl", List.of()); // leave empty
         result.put("cl_r", List.of()); // leave empty

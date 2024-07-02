@@ -4,6 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Converter
 public class StringListConverter implements AttributeConverter<List<String>, String> {
@@ -12,7 +13,10 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public String convertToDatabaseColumn(List<String> strings) {
-        return strings != null && !strings.isEmpty() ? String.join(DELIMITER, strings) : null;
+        return strings
+                .stream()
+                .filter((v) -> v != null && !v.isEmpty())
+                .collect(Collectors.joining(DELIMITER));
     }
 
     @Override
