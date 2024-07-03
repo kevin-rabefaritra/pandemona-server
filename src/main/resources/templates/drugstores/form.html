@@ -64,7 +64,7 @@
 									<div>
 										<label for="city" class="form-label required">City</label>
 										<select id="city" class="form-control" th:field="*{city}" required>
-											<option th:each="cityOption : ${T(studio.startapps.pandemona.util.models.City).values()}"
+											<option th:each="cityOption : ${T(studio.startapps.pandemona.repository.entity.City).values()}"
 													th:value="${cityOption}" th:text="${cityOption}"></option>
 										</select>
 									</div>

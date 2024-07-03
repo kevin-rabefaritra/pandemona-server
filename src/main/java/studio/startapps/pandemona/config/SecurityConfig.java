@@ -25,15 +25,16 @@ public class SecurityConfig {
                 authorizeRequests.requestMatchers("/assets/**").permitAll(); // allow all assets
                 authorizeRequests.requestMatchers("/login", "/logout").permitAll();
                 authorizeRequests.requestMatchers("/api/v3/**").permitAll();
+                authorizeRequests.requestMatchers("/hello").permitAll();
                 authorizeRequests.requestMatchers("/").permitAll();
             })
-            .formLogin((formLogin) -> {
+            .formLogin(formLogin -> {
                 formLogin
                     .loginPage("/login")
                     .defaultSuccessUrl("/home", true)
                     .permitAll();
             })
-            .logout((logout) -> {
+            .logout(logout -> {
                 logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")
