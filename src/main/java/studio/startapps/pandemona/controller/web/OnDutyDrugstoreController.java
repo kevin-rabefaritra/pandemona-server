@@ -76,7 +76,7 @@ public class OnDutyDrugstoreController {
 
         if (onDutyDrugstores.isPresent()) {
             Iterable<Drugstore> drugstores = drugstoreService.findAll();
-            model.addAttribute("onDutyDrugstores", onDutyDrugstores);
+            model.addAttribute("onDutyDrugstores", onDutyDrugstores.get());
             model.addAttribute("drugstores", drugstores);
             return "onduty-drugstores/form";
         }
