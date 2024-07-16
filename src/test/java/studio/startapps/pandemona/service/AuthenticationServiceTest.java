@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.security;
+package studio.startapps.pandemona.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,14 +6,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import studio.startapps.pandemona.exception.auth.InvalidAuthCredentialsException;
 import studio.startapps.pandemona.repository.dto.AuthTokenSet;
-import studio.startapps.pandemona.service.AuthenticationService;
 import studio.startapps.pandemona.util.RequestToken;
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles({"test"})
-public class JwtSecurityTest {
+class AuthenticationServiceTest {
 
     @Autowired
     AuthenticationService authenticationService;
@@ -38,7 +37,7 @@ public class JwtSecurityTest {
         AuthTokenSet token = this.authenticationService.authenticate(username, password);
 
         RequestToken token1 = this.authenticationService.toAccessToken(token.accessToken());
-        RequestToken token2 = this.authenticationService.toRefreshToken(token.accessToken());
+        RequestToken token2 = this.authenticationService.toRefreshToken(token.refreshToken());
 
         assertThat(this.authenticationService.hasAccessTokenExpired(token1)).isFalse();
         assertThat(this.authenticationService.hasRefreshTokenExpired(token2)).isFalse();

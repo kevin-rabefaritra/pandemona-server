@@ -5,26 +5,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.service.DrugstoreService;
 import studio.startapps.pandemona.controller.web.OnDutyDrugstoreController;
+import studio.startapps.pandemona.repository.entity.CityEnum;
+import studio.startapps.pandemona.repository.entity.Drugstore;
 import studio.startapps.pandemona.repository.entity.OnDutyDrugstores;
+import studio.startapps.pandemona.service.AuthenticationService;
 import studio.startapps.pandemona.service.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
-@WebMvcTest(OnDutyDrugstoreController.class)
+@WebMvcTest(controllers = OnDutyDrugstoreController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles({"test"})
 class OnDutyDrugstoresControllerTest {
@@ -36,27 +39,35 @@ class OnDutyDrugstoresControllerTest {
     OnDutyDrugstoresService onDutyDrugstoresService;
 
     @MockBean
-    DrugstoreService drugstoreService;
+    AuthenticationService authenticationService;
 
+    @WithMockUser("user")
     @Test
-    @WithUserDetails("user")
-    void testOnDutyDrugstoresIndexForAdminIsOk() throws Exception {
-        Pageable pageable = PageRequest.of(0, 1);
-        Page<OnDutyDrugstores> emptyPage = Page.empty(pageable);
-
-        given(onDutyDrugstoresService.findAll(any())).willReturn(emptyPage);
-
-        mockMvc.perform(get("/onduty-drugstores"))
-            .andExpect(status().isOk());
+    void testGetOnDutyDrugstoresIsOk() throws Exception {
+        mockMvc.perform(get("/api/onduty-drugstores"))
+                .andExpect(status().isOk());
     }
 
+    @WithMockUser("user")
     @Test
-    @WithUserDetails("user")
-    void testCreateFormIsOk() throws Exception {
-        LocalDate today = LocalDate.now();
-        given(onDutyDrugstoresService.getNextStartDate()).willReturn(today);
+    void testGetOnDutyDrugstoresByIdIsValid() throws Exception {
+        given(onDutyDrugstoresService.findById(10L)).willReturn(Optional.of(getDummyOnDutyDrugstores()));
 
-        mockMvc.perform(get("/onduty-drugstores/create"))
+        mockMvc.perform(get("/api/onduty-drugstores/10"))
                 .andExpect(status().isOk());
+
+        verify(onDutyDrugstoresService).findById(10L);
+    }
+
+    private static OnDutyDrugstores getDummyOnDutyDrugstores() {
+        OnDutyDrugstores result = new OnDutyDrugstores();
+        result.setStartDate(LocalDate.now());
+        result.setEndDate(LocalDate.now().plusDays(7));
+        result.setDrugstores(Set.of(
+            new Drugstore(1, "name", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO),
+            new Drugstore(2, "name2", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO),
+            new Drugstore(3, "name3", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO)
+        ));
+        return result;
     }
 }

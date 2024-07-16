@@ -23,12 +23,12 @@ import java.util.List;
 @ControllerAdvice
 public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(RequestExceptionHandler.class);
+    private final Logger exceptionLogger = LoggerFactory.getLogger(RequestExceptionHandler.class);
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({InvalidAuthCredentialsException.class, TokenSubjectMismatchException.class, TokenExpiredException.class})
     protected void handleUnauthorized() {
-        this.logger.info("[RestExceptionHandler.handleUnauthorized]");
+        this.exceptionLogger.info("[RestExceptionHandler.handleUnauthorized]");
     }
 
     @Override
@@ -39,9 +39,7 @@ public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request
     ) {
         List<String> errors = new ArrayList<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            errors.add(String.format("%s %s", ((FieldError) error).getField(), error.getDefaultMessage()));
-        });
+        ex.getBindingResult().getAllErrors().forEach(error -> errors.add(String.format("%s %s", ((FieldError) error).getField(), error.getDefaultMessage())));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

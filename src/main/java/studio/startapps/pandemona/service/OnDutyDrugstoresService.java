@@ -2,7 +2,6 @@ package studio.startapps.pandemona.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.repository.OnDutyDrugstoresRepository;
 import studio.startapps.pandemona.repository.dto.OnDutyDrugstoresDTO;
@@ -11,7 +10,6 @@ import studio.startapps.pandemona.util.DateUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

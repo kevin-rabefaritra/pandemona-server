@@ -49,6 +49,6 @@ public class DrugstoreService {
     }
 
     public List<OnDutyDrugstoresItemDTO> findAllAsDTO() {
-        return this.findAll().stream().map((item) -> new OnDutyDrugstoresItemDTO(item.getId(), item.getName())).toList();
+        return this.findAll().stream().map(item -> new OnDutyDrugstoresItemDTO(item.getId(), item.getName())).toList();
     }
 }

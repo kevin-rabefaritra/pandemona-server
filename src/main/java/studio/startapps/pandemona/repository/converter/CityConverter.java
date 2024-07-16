@@ -11,12 +11,12 @@ import java.util.Optional;
 public class CityConverter implements AttributeConverter<CityEnum, Integer> {
     @Override
     public Integer convertToDatabaseColumn(CityEnum city) {
-        return city.value;
+        return city.getValue();
     }
 
     @Override
     public CityEnum convertToEntityAttribute(Integer value) {
-        Optional<CityEnum> cityEnum = Arrays.stream(CityEnum.values()).filter((item) -> item.value == value).findFirst();
+        Optional<CityEnum> cityEnum = Arrays.stream(CityEnum.values()).filter(item -> item.getValue() == value).findFirst();
         return cityEnum.orElse(null); // should not return null
     }
 }

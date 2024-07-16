@@ -5,24 +5,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.repository.entity.Drugstore;
 import studio.startapps.pandemona.controller.web.DrugstoreController;
+import studio.startapps.pandemona.repository.entity.CityEnum;
+import studio.startapps.pandemona.repository.entity.Drugstore;
+import studio.startapps.pandemona.service.AuthenticationService;
 import studio.startapps.pandemona.service.DrugstoreService;
+import studio.startapps.pandemona.utils.JsonUtils;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.List;
+import java.util.Optional;
 
-@WebMvcTest(DrugstoreController.class)
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+
+@WebMvcTest(controllers = DrugstoreController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles({"test"})
 class DrugstoreControllerTest {
@@ -33,34 +37,86 @@ class DrugstoreControllerTest {
     @MockBean
     DrugstoreService drugstoreService;
 
+    @MockBean
+    AuthenticationService authenticationService;
+
+    @WithMockUser("user")
     @Test
-    @WithUserDetails("user")
-    void testDrugstoreIndexForAdminIsOk() throws Exception {
-        Pageable pageable = PageRequest.of(0, 1);
-        Page<Drugstore> emptyPage = Page.empty(pageable);
-
-        given(drugstoreService.findAll(any())).willReturn(emptyPage);
-
-        mockMvc.perform(get("/drugstores"))
-            .andExpect(status().isOk());
+    void testGetDrugstoresIsOk() throws Exception {
+        mockMvc.perform(get("/api/drugstores")).andExpect(status().isOk());
     }
 
-    @Test
     @WithAnonymousUser
-    void testDrugstoreIndexForGuestIsRedirected() throws Exception {
-        Pageable pageable = PageRequest.of(0, 1);
-        Page<Drugstore> emptyPage = Page.empty(pageable);
-
-        given(drugstoreService.findAll(any())).willReturn(emptyPage);
-
-        mockMvc.perform(get("/drugstores"))
-                .andExpect(status().is3xxRedirection());
+    @Test
+    void testGetDrugstoresAnonymousIsUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/drugstores")).andExpect(status().isUnauthorized());
     }
 
+    @WithMockUser("user")
     @Test
-    @WithUserDetails("user")
-    void testCreateFormIsOk() throws Exception {
-        mockMvc.perform(get("/drugstores/create"))
+    void testCreateDrugstoreIsCreated() throws Exception {
+        given(drugstoreService.save(any(Drugstore.class))).willReturn(new Drugstore());
+
+        Drugstore drugstore = getDummyDrugstore();
+
+        mockMvc.perform(post("/api/drugstores")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(JsonUtils.asJsonString(drugstore)))
+                .andExpect(status().isCreated());
+        verify(drugstoreService).save(any(Drugstore.class));
+    }
+
+    @WithMockUser("user")
+    @Test
+    void testGetDrugstoreIsValid() throws Exception {
+        Drugstore drugstore = getDummyDrugstore();
+        drugstore.setId(10L);
+
+        given(drugstoreService.findFirstById(10L)).willReturn(Optional.of(drugstore));
+        mockMvc.perform(get("/api/drugstores/10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(10L));
+    }
+
+    @WithMockUser("user")
+    @Test
+    void testUpdateDrugstoreIsValid() throws Exception {
+        Drugstore drugstore = getDummyDrugstore();
+
+        mockMvc.perform(put("/api/drugstores/10")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.asJsonString(drugstore)))
+                .andExpect(status().isNoContent());
+
+        drugstore.setId(10L);
+        verify(drugstoreService).save(drugstore);
+    }
+
+    @WithMockUser("user")
+    @Test
+    void testDeleteDrugstoreIsValid() throws Exception {
+        mockMvc.perform(delete("/api/drugstores/10"))
+                .andExpect(status().isNoContent());
+        verify(drugstoreService).deleteById(10L);
+    }
+
+    @WithMockUser("user")
+    @Test
+    void testGetCitiesIsConsistent() throws Exception {
+        mockMvc.perform(get("/api/drugstores/cities"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray());
+    }
+
+    @WithMockUser("user")
+    @Test
+    void testGetAllDrugstoresDTO() throws Exception {
+        mockMvc.perform(get("/api/drugstores/all"))
                 .andExpect(status().isOk());
+    }
+
+    private static Drugstore getDummyDrugstore() {
+        return new Drugstore("Drugstore test", "Address", List.of("444444444"), -1, -1, List.of(), CityEnum.ANTANANARIVO);
     }
 }

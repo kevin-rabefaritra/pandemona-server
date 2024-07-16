@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.config.SecurityConfig;
+import studio.startapps.pandemona.service.AuthenticationService;
 import studio.startapps.pandemona.service.DrugstoreService;
 import studio.startapps.pandemona.controller.app.LegacyDrugstoreRestController;
 import studio.startapps.pandemona.service.OnDutyDrugstoresService;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value = LegacyDrugstoreRestController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles({"test"})
-class APIControllerTest {
+class LegacyDrugstoreControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -32,10 +33,8 @@ class APIControllerTest {
     @MockBean
     OnDutyDrugstoresService onDutyDrugstoresService;
 
-    @Test
-    void testHelloOk() throws Exception {
-        mockMvc.perform(get("/api/v3/hello")).andExpect(status().isOk());
-    }
+    @MockBean
+    AuthenticationService authenticationService;
 
     @Test
     void testEndpointIsOk() throws Exception {

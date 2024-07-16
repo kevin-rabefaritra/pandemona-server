@@ -64,7 +64,7 @@ public class LegacyDrugstoreRestController {
                 mappedItem.put("c", stringListConverter.convertToDatabaseColumn(item.getContacts()));
                 mappedItem.put("lt", item.getLatitude());
                 mappedItem.put("ln", item.getLongitude());
-                mappedItem.put("ci", item.getCity().value + 10); // legacy city value = City ordinal value + 10
+                mappedItem.put("ci", item.getCity().getValue() + 10); // legacy city value = City ordinal value + 10
                 mappedItem.put("o", 0);
                 return mappedItem;
             }).toList();
