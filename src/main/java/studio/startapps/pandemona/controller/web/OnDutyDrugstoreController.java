@@ -1,100 +1,66 @@
 package studio.startapps.pandemona.controller.web;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import studio.startapps.pandemona.repository.entity.Drugstore;
-import studio.startapps.pandemona.service.DrugstoreService;
+import studio.startapps.pandemona.exception.drugstore.OnDutyDrugstoresNotFoundException;
+import studio.startapps.pandemona.repository.dto.OnDutyDrugstoresDTO;
 import studio.startapps.pandemona.repository.entity.OnDutyDrugstores;
 import studio.startapps.pandemona.service.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/onduty-drugstores")
+@RestController
+@CrossOrigin(originPatterns = "127.0.0.1:[*]")
+@RequestMapping("/api/onduty-drugstores")
 public class OnDutyDrugstoreController {
 
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 15;
     private static final String SORT_BY = "endDate";
-    private static final String URL_REDIRECT_MAIN = "redirect:/onduty-drugstores";
 
     private final OnDutyDrugstoresService onDutyDrugstoresService;
-    private final DrugstoreService drugstoreService;
 
-    public OnDutyDrugstoreController(
-            OnDutyDrugstoresService onDutyDrugstoresService,
-            DrugstoreService drugstoreService
-    ) {
+    public OnDutyDrugstoreController(OnDutyDrugstoresService onDutyDrugstoresService) {
         this.onDutyDrugstoresService = onDutyDrugstoresService;
-        this.drugstoreService = drugstoreService;
     }
 
-    @GetMapping("")
-    public String index(Model model, @RequestParam(defaultValue = "0") int page) {
-        Sort sort = Sort.by(SORT_BY).descending();
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE, sort);
-
-        Page<OnDutyDrugstores> onDutyDrugstores = onDutyDrugstoresService.findAll(pageable);
-        model.addAttribute("onDutyDrugstoresList", onDutyDrugstores);
-        return "onduty-drugstores/index";
+    @GetMapping
+    public Page<OnDutyDrugstoresDTO> index(@PageableDefault(size = PAGE_SIZE, sort = SORT_BY, direction = Sort.Direction.DESC) Pageable pageable) {
+        return onDutyDrugstoresService.findAllAsDTO(pageable);
     }
 
-    @GetMapping("/create")
-    public String createForm(Model model) {
-        LocalDate defaultStartDate = this.onDutyDrugstoresService.getNextStartDate();
-        LocalDate defaultEndDate = defaultStartDate.plusWeeks(1);
-
-        OnDutyDrugstores onDutyDrugstores = new OnDutyDrugstores();
-        onDutyDrugstores.setStartDate(defaultStartDate);
-        onDutyDrugstores.setEndDate(defaultEndDate);
-
-        Iterable<Drugstore> drugstoreList = drugstoreService.findAll();
-
-        model.addAttribute("onDutyDrugstores", onDutyDrugstores);
-        model.addAttribute("drugstores", drugstoreList);
-        model.addAttribute("defaultStartDate", defaultStartDate);
-        model.addAttribute("defaultEndDate", defaultEndDate);
-
-        model.addAttribute("title", "Add on-duty drugstores");
-        return "onduty-drugstores/form";
+    @GetMapping(path = "/{onDutyDrugstoresId}")
+    public OnDutyDrugstoresDTO get(@PathVariable long onDutyDrugstoresId) throws OnDutyDrugstoresNotFoundException {
+        Optional<OnDutyDrugstores> onDutyDrugstoresOptional = onDutyDrugstoresService.findById(onDutyDrugstoresId);
+        OnDutyDrugstores onDutyDrugstores = onDutyDrugstoresOptional.orElseThrow(() -> new OnDutyDrugstoresNotFoundException(onDutyDrugstoresId));
+        return new OnDutyDrugstoresDTO(onDutyDrugstores);
     }
 
-    @PostMapping("/create")
-    public String createSubmit(@ModelAttribute OnDutyDrugstores onDutyDrugstores) {
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@Valid @RequestBody OnDutyDrugstores onDutyDrugstores) {
         onDutyDrugstoresService.save(onDutyDrugstores);
-        return URL_REDIRECT_MAIN;
     }
 
-    @GetMapping("/{onDutyDrugstoresId}/edit")
-    public String updateForm(@PathVariable long onDutyDrugstoresId, Model model) {
-        Optional<OnDutyDrugstores> onDutyDrugstores = onDutyDrugstoresService.findById(onDutyDrugstoresId);
-
-        if (onDutyDrugstores.isPresent()) {
-            Iterable<Drugstore> drugstores = drugstoreService.findAll();
-            model.addAttribute("onDutyDrugstores", onDutyDrugstores.get());
-            model.addAttribute("drugstores", drugstores);
-            return "onduty-drugstores/form";
-        }
-        else {
-            return URL_REDIRECT_MAIN;
-        }
-    }
-
-    @PostMapping("/{onDutyDrugstoresId}/edit")
-    public String updateSubmit(@PathVariable long onDutyDrugstoresId, @ModelAttribute OnDutyDrugstores onDutyDrugstores) {
+    @PutMapping("/{onDutyDrugstoresId}")
+    public void update(@PathVariable long onDutyDrugstoresId, @Valid @RequestBody OnDutyDrugstores onDutyDrugstores) {
         onDutyDrugstores.setId(onDutyDrugstoresId);
         onDutyDrugstoresService.save(onDutyDrugstores);
-        return URL_REDIRECT_MAIN;
     }
 
-    @RequestMapping(value = "/{onDutyDrugstoresId}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable long onDutyDrugstoresId) {
+    @DeleteMapping(value = "/{onDutyDrugstoresId}")
+    public void delete(@PathVariable long onDutyDrugstoresId) {
         onDutyDrugstoresService.deleteById(onDutyDrugstoresId);
-        return URL_REDIRECT_MAIN;
+    }
+
+    @GetMapping(path = "/next-period")
+    public List<LocalDate> getNextPeriod() {
+        return onDutyDrugstoresService.getNextPeriod();
     }
 }

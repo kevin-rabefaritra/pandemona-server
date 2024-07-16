@@ -2,26 +2,70 @@ package studio.startapps.pandemona.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Service;
+import studio.startapps.pandemona.repository.OnDutyDrugstoresRepository;
+import studio.startapps.pandemona.repository.dto.OnDutyDrugstoresDTO;
 import studio.startapps.pandemona.repository.entity.OnDutyDrugstores;
+import studio.startapps.pandemona.util.DateUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public interface OnDutyDrugstoresService {
+@Service
+public class OnDutyDrugstoresService {
 
-    Page<OnDutyDrugstores> findAll(Pageable pageable);
+    private final OnDutyDrugstoresRepository onDutyDrugstoresRepository;
 
-    OnDutyDrugstores save(OnDutyDrugstores onDutyDrugstores);
+    public OnDutyDrugstoresService(OnDutyDrugstoresRepository onDutyDrugstoresRepository) {
+        this.onDutyDrugstoresRepository = onDutyDrugstoresRepository;
+    }
 
-    Optional<OnDutyDrugstores> findById(long onDutyDrugstoresId);
+    public Page<OnDutyDrugstores> findAll(Pageable pageable) {
+        return this.onDutyDrugstoresRepository.findAll(pageable);
+    }
 
-    void deleteById(long onDutyDrugstoresId);
+    public Page<OnDutyDrugstoresDTO> findAllAsDTO(Pageable pageable) {
+        return this.findAll(pageable).map(OnDutyDrugstoresDTO::new);
+    }
 
-    List<OnDutyDrugstores> findByUpdatedAtGreaterThanEqual(LocalDateTime lastUpdateDate);
+    public OnDutyDrugstores save(OnDutyDrugstores onDutyDrugstores) {
+        return this.onDutyDrugstoresRepository.save(onDutyDrugstores);
+    }
 
-    Iterable<OnDutyDrugstores> findAllDeleted();
+    public Optional<OnDutyDrugstores> findById(long onDutyDrugstoresId) {
+        return this.onDutyDrugstoresRepository.findById(onDutyDrugstoresId);
+    }
 
-    LocalDate getNextStartDate();
+    public void deleteById(long onDutyDrugstoresId) {
+        this.onDutyDrugstoresRepository.deleteById(onDutyDrugstoresId);
+    }
+
+    public List<OnDutyDrugstores> findByUpdatedAtGreaterThanEqual(LocalDateTime lastUpdateDate) {
+        return this.onDutyDrugstoresRepository.findByUpdatedAtGreaterThanEqual(lastUpdateDate);
+    }
+
+    public Iterable<OnDutyDrugstores> findAllDeleted() {
+        return this.onDutyDrugstoresRepository.findAllDeleted();
+    }
+
+    public LocalDate getNextStartDate() {
+        OnDutyDrugstores onDutyDrugstores = this.onDutyDrugstoresRepository.findLatestOnDutyDrugstores();
+        if (onDutyDrugstores != null) {
+            return onDutyDrugstores.getEndDate();
+        }
+        else {
+            LocalDate today = LocalDate.now();
+            return DateUtils.nextSaturdayAfter(today);
+        }
+    }
+
+    public List<LocalDate> getNextPeriod() {
+        LocalDate startDate = this.getNextStartDate();
+        LocalDate endDate = startDate.plusDays(7);
+        return List.of(startDate, endDate);
+    }
 }

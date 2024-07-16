@@ -2,6 +2,9 @@ package studio.startapps.pandemona.repository.entity;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import studio.startapps.pandemona.repository.converter.CityConverter;
 import studio.startapps.pandemona.repository.converter.StringListConverter;
 
@@ -14,22 +17,28 @@ import java.util.List;
 @MappedSuperclass
 public abstract class Business extends BaseEntity {
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String address;
 
+    @NotEmpty
     @Convert(converter = StringListConverter.class)
     private List<String> contacts;
 
+    @NotNull
     private Double latitude;
 
+    @NotNull
     private Double longitude;
 
     @Convert(converter = StringListConverter.class)
     private List<String> features;
 
+    @NotNull
     @Convert(converter = CityConverter.class)
-    private City city;
+    private CityEnum city;
 
     public String getName() {
         return name;
@@ -83,11 +92,11 @@ public abstract class Business extends BaseEntity {
         this.features = features;
     }
 
-    public City getCity() {
+    public CityEnum getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(CityEnum city) {
         this.city = city;
     }
 

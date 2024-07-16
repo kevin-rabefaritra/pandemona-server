@@ -2,14 +2,15 @@ package studio.startapps.pandemona.util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public interface DateUtils {
 
     /**
-     * Formats a local date
-     * @param localDate
-     * @return
+     * Formats a local date to String
+     * @param localDate The LocalDate instance to be processed
+     * @return A long string representation of the localDate
      */
     static String formatDate(LocalDate localDate) {
         return DateUtils.formatDate(localDate, "d LLLL uuuu");
@@ -31,7 +32,16 @@ public interface DateUtils {
         return localDate;
     }
 
-    static LocalDate nextSaturdayAfter() {
-        return nextSaturdayAfter(LocalDate.now());
+    static LocalDateTime now() {
+        return LocalDateTime.now();
+    }
+
+    static String formatDateTimeISO(LocalDateTime localDateTime) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        return localDateTime.format(dateTimeFormatter);
+    }
+
+    static LocalDateTime parseDateTimeISO(String dateTime) {
+        return LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
     }
 }

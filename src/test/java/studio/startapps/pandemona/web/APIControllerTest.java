@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.config.SecurityConfig;
 import studio.startapps.pandemona.service.DrugstoreService;
-import studio.startapps.pandemona.controller.api.DrugstoreAPIControllerV3;
+import studio.startapps.pandemona.controller.app.LegacyDrugstoreRestController;
 import studio.startapps.pandemona.service.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(value = DrugstoreAPIControllerV3.class)
+@WebMvcTest(value = LegacyDrugstoreRestController.class)
 @Import(SecurityConfig.class)
 @ActiveProfiles({"test"})
 class APIControllerTest {

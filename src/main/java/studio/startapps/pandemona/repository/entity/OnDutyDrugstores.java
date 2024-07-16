@@ -1,6 +1,9 @@
 package studio.startapps.pandemona.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -14,15 +17,18 @@ import java.util.Set;
 @Table(name = "onduty_drugstores")
 public class OnDutyDrugstores extends BaseEntity {
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "end_date")
     private LocalDate endDate;
 
     @ManyToMany
+    @NotEmpty
     @JoinTable(
         name = "onduty_drugstores_drugstore",
         joinColumns = @JoinColumn(name = "onduty_drugstores_id"),

@@ -2,17 +2,21 @@ package studio.startapps.pandemona.repository.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import studio.startapps.pandemona.repository.entity.City;
+import studio.startapps.pandemona.repository.entity.CityEnum;
+
+import java.util.Arrays;
+import java.util.Optional;
 
 @Converter
-public class CityConverter implements AttributeConverter<City, Integer> {
+public class CityConverter implements AttributeConverter<CityEnum, Integer> {
     @Override
-    public Integer convertToDatabaseColumn(City city) {
-        return city.ordinal();
+    public Integer convertToDatabaseColumn(CityEnum city) {
+        return city.value;
     }
 
     @Override
-    public City convertToEntityAttribute(Integer integer) {
-        return City.values()[integer];
+    public CityEnum convertToEntityAttribute(Integer value) {
+        Optional<CityEnum> cityEnum = Arrays.stream(CityEnum.values()).filter((item) -> item.value == value).findFirst();
+        return cityEnum.orElse(null); // should not return null
     }
 }

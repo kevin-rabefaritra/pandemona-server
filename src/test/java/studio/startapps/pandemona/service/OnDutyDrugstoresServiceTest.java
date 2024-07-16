@@ -11,17 +11,12 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS)
+@SpringBootTest()
 @ActiveProfiles({"test"})
 class OnDutyDrugstoresServiceTest {
 
     @Autowired
     private OnDutyDrugstoresService onDutyDrugstoresService;
-
-    @Test
-    void checkServiceInstancesAreNotNull() {
-        assertNotNull(onDutyDrugstoresService);
-    }
 
     @Test
     void testSaveAndCheckByNextStartDateOnDutyDrugstoreIsCorrect() {

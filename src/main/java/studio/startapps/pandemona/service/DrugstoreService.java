@@ -2,25 +2,53 @@ package studio.startapps.pandemona.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import studio.startapps.pandemona.repository.DrugstoreRepository;
+import studio.startapps.pandemona.repository.dto.OnDutyDrugstoresItemDTO;
 import studio.startapps.pandemona.repository.entity.Drugstore;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface DrugstoreService {
+@Service
+public class DrugstoreService {
 
-    List<Drugstore> findAll();
+    private DrugstoreRepository drugstoreRepository;
 
-    Page<Drugstore> findAll(Pageable pageable);
+    public DrugstoreService(DrugstoreRepository drugstoreRepository) {
+        this.drugstoreRepository = drugstoreRepository;
+    }
 
-    Drugstore save(Drugstore drugstore);
+    public List<Drugstore> findAll() {
+        return this.drugstoreRepository.findAll();
+    }
 
-    List<Drugstore> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime);
+    public Page<Drugstore> findAll(Pageable pageable) {
+        return this.drugstoreRepository.findAll(pageable);
+    }
 
-    List<Drugstore> findAllDeleted();
+    public Drugstore save(Drugstore drugstore) {
+        return this.drugstoreRepository.save(drugstore);
+    }
 
-    Optional<Drugstore> findFirstById(long drugstoreId);
+    public List<Drugstore> findByUpdatedAtGreaterThanEqual(LocalDateTime localDateTime) {
+        return this.drugstoreRepository.findByUpdatedAtGreaterThanEqual(localDateTime);
+    }
 
-    void deleteById(long drugstoreId);
+    public List<Drugstore> findAllDeleted() {
+        return this.drugstoreRepository.findAllDeleted();
+    }
+
+    public Optional<Drugstore> findFirstById(long drugstoreId) {
+        return this.drugstoreRepository.findById(drugstoreId);
+    }
+
+    public void deleteById(long drugstoreId) {
+        this.drugstoreRepository.deleteById(drugstoreId);
+    }
+
+    public List<OnDutyDrugstoresItemDTO> findAllAsDTO() {
+        return this.findAll().stream().map((item) -> new OnDutyDrugstoresItemDTO(item.getId(), item.getName())).toList();
+    }
 }

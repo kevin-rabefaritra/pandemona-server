@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Drugstore extends Business {
 
     public Drugstore(long id, String name, String address, List<String> contacts, double latitude, double longitude,
-                     List<String> features, City city) {
+                     List<String> features, CityEnum city) {
         this.setId(id);
         this.setName(name);
         this.setAddress(address);
@@ -27,7 +27,7 @@ public class Drugstore extends Business {
     }
 
     public Drugstore(String name, String address, List<String> contacts, double latitude, double longitude,
-                     List<String> features, City city) {
+                     List<String> features, CityEnum city) {
         this(0, name, address, contacts, latitude, longitude, features, city);
     }
 
