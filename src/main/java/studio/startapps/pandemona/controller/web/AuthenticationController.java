@@ -10,7 +10,6 @@ import studio.startapps.pandemona.service.AuthenticationService;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(originPatterns = "127.0.0.1:[*]")
 @RequestMapping(path = "/api/auth")
 public class AuthenticationController {
 

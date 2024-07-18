@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(originPatterns = "127.0.0.1:[*]")
 @RequestMapping("/api/onduty-drugstores")
 public class OnDutyDrugstoreController {
 

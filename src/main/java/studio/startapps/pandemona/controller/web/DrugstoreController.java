@@ -15,7 +15,6 @@ import studio.startapps.pandemona.service.DrugstoreService;
 import java.util.*;
 
 @RestController
-@CrossOrigin(originPatterns = "127.0.0.1:[*]")
 @RequestMapping(path = "/api/drugstores")
 public class DrugstoreController {
 
