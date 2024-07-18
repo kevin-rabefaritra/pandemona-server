@@ -23,7 +23,6 @@ import java.util.stream.StreamSupport;
  * still uses Map<String, Object> to pass data. DTO will be used in future versions.
  */
 @RestController
-@CrossOrigin(originPatterns = "*", methods = RequestMethod.GET)
 @RequestMapping(path = "/api/v3")
 public class LegacyDrugstoreRestController {
 
