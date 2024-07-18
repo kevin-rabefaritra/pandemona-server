@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -18,15 +18,16 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        Stream<String> protectedEndpoints = Stream.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores");
+        List<String> protectedEndpoints = List.of("/api/auth/*", "/api/drugstores/**", "/api/onduty-drugstores/**");
         protectedEndpoints.forEach((endpoint) -> {
             registry.addMapping(endpoint)
-                    .allowedOriginPatterns(this.clientOrigin)
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD");
+                    .allowedOrigins(this.clientOrigin)
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+                    .allowCredentials(true);
         });
 
         // Mobile endpoint (GET only)
-        registry.addMapping("/api/auth/**")
+        registry.addMapping("/api/v3/**")
                 .allowedOrigins("*")
                 .allowedMethods("GET");
     }
