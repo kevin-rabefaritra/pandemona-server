@@ -80,7 +80,7 @@ public class AuthenticationService implements UserDetailsService {
             throw new TokenExpiredException();
         }
 
-        AuthTokenSet authTokenSet = JwtUtil.generateTokenSet(username, this.accessSecretKey, this.accessSecretKey);
+        AuthTokenSet authTokenSet = JwtUtil.generateTokenSet(username, this.accessSecretKey, this.refreshSecretKey);
         return new AuthTokenSet(authTokenSet.accessToken(), refreshToken);
     }
 

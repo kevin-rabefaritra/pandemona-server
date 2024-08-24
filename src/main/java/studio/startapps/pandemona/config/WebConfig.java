@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        List<String> protectedEndpoints = List.of("/api/auth/*", "/api/drugstores/**", "/api/onduty-drugstores/**");
+        List<String> protectedEndpoints = List.of("/api/auth/*", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/analytics/**");
         protectedEndpoints.forEach((endpoint) -> {
             registry.addMapping(endpoint)
                     .allowedOrigins(this.clientOrigin)
