@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.controller.web.OnDutyDrugstoreController;
-import studio.startapps.pandemona.repository.entity.CityEnum;
-import studio.startapps.pandemona.repository.entity.Drugstore;
-import studio.startapps.pandemona.repository.entity.OnDutyDrugstores;
-import studio.startapps.pandemona.service.AuthenticationService;
-import studio.startapps.pandemona.service.OnDutyDrugstoresService;
+import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.drugstore.OnDutyDrugstoreController;
+import studio.startapps.pandemona.drugstore.internal.CityEnum;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.drugstore.OnDutyDrugstores;
+import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.drugstore.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,9 +23,7 @@ import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 @WebMvcTest(controllers = OnDutyDrugstoreController.class)
 @Import(SecurityConfig.class)
@@ -63,11 +61,7 @@ class OnDutyDrugstoresControllerTest {
         OnDutyDrugstores result = new OnDutyDrugstores();
         result.setStartDate(LocalDate.now());
         result.setEndDate(LocalDate.now().plusDays(7));
-        result.setDrugstores(Set.of(
-            new Drugstore(1, "name", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO),
-            new Drugstore(2, "name2", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO),
-            new Drugstore(3, "name3", "address", List.of("111111"), -1, -1, List.of(), CityEnum.ANTANANARIVO)
-        ));
+        result.setDrugstores(Set.of());
         return result;
     }
 }

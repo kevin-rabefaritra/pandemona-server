@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import studio.startapps.pandemona.exception.auth.InvalidAuthCredentialsException;
-import studio.startapps.pandemona.repository.dto.AuthTokenSet;
+import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.auth.internal.InvalidAuthCredentialsException;
+import studio.startapps.pandemona.auth.internal.AuthTokenSet;
 import studio.startapps.pandemona.util.RequestToken;
 
 import static org.assertj.core.api.Assertions.*;

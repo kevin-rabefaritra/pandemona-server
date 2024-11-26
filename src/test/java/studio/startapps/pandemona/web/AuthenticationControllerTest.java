@@ -8,19 +8,16 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.controller.web.AuthenticationController;
-import studio.startapps.pandemona.exception.auth.TokenExpiredException;
-import studio.startapps.pandemona.repository.dto.AuthTokenSet;
-import studio.startapps.pandemona.repository.entity.User;
-import studio.startapps.pandemona.service.AuthenticationService;
-import studio.startapps.pandemona.utils.JsonUtils;
+import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.auth.AuthenticationController;
+import studio.startapps.pandemona.auth.internal.TokenExpiredException;
+import studio.startapps.pandemona.auth.internal.AuthTokenSet;
+import studio.startapps.pandemona.auth.AuthenticationService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 @WebMvcTest(controllers = AuthenticationController.class)
 @Import(SecurityConfig.class)

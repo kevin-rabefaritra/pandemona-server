@@ -48,3 +48,4 @@ compose.yaml
 src/main/resources/application-prod.properties
 docker-compose.yaml
 src/main/resources/data.sql
+production

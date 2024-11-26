@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import studio.startapps.pandemona.repository.dto.AuthTokenSet;
+import studio.startapps.pandemona.auth.internal.AuthTokenSet;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;

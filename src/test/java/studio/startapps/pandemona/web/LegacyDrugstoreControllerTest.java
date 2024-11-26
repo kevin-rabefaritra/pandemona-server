@@ -7,11 +7,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.service.AuthenticationService;
-import studio.startapps.pandemona.service.DrugstoreService;
-import studio.startapps.pandemona.controller.app.LegacyDrugstoreRestController;
-import studio.startapps.pandemona.service.OnDutyDrugstoresService;
+import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.drugstore.DrugstoreService;
+import studio.startapps.pandemona.drugstore.LegacyDrugstoreRestController;
+import studio.startapps.pandemona.drugstore.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

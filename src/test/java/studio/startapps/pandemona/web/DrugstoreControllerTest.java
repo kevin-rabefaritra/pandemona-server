@@ -10,12 +10,12 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.config.SecurityConfig;
-import studio.startapps.pandemona.controller.web.DrugstoreController;
-import studio.startapps.pandemona.repository.entity.CityEnum;
-import studio.startapps.pandemona.repository.entity.Drugstore;
-import studio.startapps.pandemona.service.AuthenticationService;
-import studio.startapps.pandemona.service.DrugstoreService;
+import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.drugstore.DrugstoreController;
+import studio.startapps.pandemona.drugstore.internal.CityEnum;
+import studio.startapps.pandemona.drugstore.Drugstore;
+import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.drugstore.DrugstoreService;
 import studio.startapps.pandemona.utils.JsonUtils;
 
 import java.util.List;
@@ -117,6 +117,13 @@ class DrugstoreControllerTest {
     }
 
     private static Drugstore getDummyDrugstore() {
-        return new Drugstore("Drugstore test", "Address", List.of("444444444"), -1, -1, List.of(), CityEnum.ANTANANARIVO);
+        Drugstore result = new Drugstore();
+        result.setName("Drugstore test");
+        result.setAddress("Address");
+        result.setContacts(List.of("444444444"));
+        result.setLatitude(-1d);
+        result.setLongitude(-1d);
+        result.setCity(CityEnum.ANTANANARIVO);
+        return result;
     }
 }
