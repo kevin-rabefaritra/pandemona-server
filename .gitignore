@@ -45,7 +45,10 @@ node_modules
 src/main/resources/application.properties
 *.sql
 compose.yaml
-src/main/resources/application-prod.properties
+src/main/resources/application-production.properties
+development.env
+docker-compose-production.yaml
+
 docker-compose.yaml
 src/main/resources/data.sql
 production
