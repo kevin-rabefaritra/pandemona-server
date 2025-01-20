@@ -33,7 +33,7 @@ public class SecurityConfig {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequests -> {
-                authorizeRequests.requestMatchers("/api/v3/**").permitAll();
+                authorizeRequests.requestMatchers("/api/v3/**", "/api/mobile/**").permitAll();
                 authorizeRequests.requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll();
                 authorizeRequests.anyRequest().authenticated();
             })

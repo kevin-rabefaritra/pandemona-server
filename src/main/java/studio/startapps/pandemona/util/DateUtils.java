@@ -36,6 +36,10 @@ public interface DateUtils {
         return LocalDateTime.now();
     }
 
+    static LocalDate today() {
+        return LocalDate.now();
+    }
+
     static String formatDateTimeISO(LocalDateTime localDateTime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
         return localDateTime.format(dateTimeFormatter);
