@@ -3,6 +3,7 @@ package studio.startapps.pandemona.healthcenter.admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import studio.startapps.pandemona.business.exception.BusinessNotFoundException;
@@ -17,10 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HealthCenterController {
 
+    private static final int ITEMS_PER_PAGE = 20;
+    private static final String DEFAULT_SORT = "name";
+
     private final HealthCenterService healthCenterService;
 
     @GetMapping
-    Page<HealthCenterPreview> findAll(Pageable pageable) {
+    Page<HealthCenterPreview> findAll(@PageableDefault(size = ITEMS_PER_PAGE, sort = DEFAULT_SORT) Pageable pageable) {
         return this.healthCenterService.findAll(pageable);
     }
 
