@@ -6,7 +6,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import studio.startapps.pandemona.business.exception.BusinessNotFoundException;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresItemPreview;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class DrugstoreController {
     private final DrugstoreService drugstoreService;
 
     private static final int ITEMS_PER_PAGE = 20;
-    private static final String DEFAULT_SORT = "id";
+    private static final String DEFAULT_SORT = "name";
 
     public DrugstoreController(DrugstoreService drugstoreService) {
         this.drugstoreService = drugstoreService;
