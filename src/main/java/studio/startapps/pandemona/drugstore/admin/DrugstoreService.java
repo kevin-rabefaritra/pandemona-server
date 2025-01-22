@@ -8,11 +8,13 @@ import studio.startapps.pandemona.business.exception.BusinessNotFoundException;
 import studio.startapps.pandemona.drugstore.internal.Drugstore;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreFeature;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreRepository;
+import studio.startapps.pandemona.drugstore.internal.DrugstoreSpecification;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresItemPreview;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -21,8 +23,9 @@ public class DrugstoreService {
 
     private final DrugstoreRepository drugstoreRepository;
 
-    Page<DrugstorePreview> findAll(Pageable pageable) {
-        return this.drugstoreRepository.findAll(pageable).map(DrugstorePreview::new);
+    Page<DrugstorePreview> findAll(Pageable pageable, Map<String, String> filters) {
+        DrugstoreSpecification specification = new DrugstoreSpecification(filters);
+        return this.drugstoreRepository.findAll(specification, pageable).map(DrugstorePreview::new);
     }
 
     List<DrugstorePreview> findByKeyword(String keyword) {

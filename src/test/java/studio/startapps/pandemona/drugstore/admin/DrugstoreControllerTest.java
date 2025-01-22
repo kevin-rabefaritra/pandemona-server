@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,6 +17,7 @@ import studio.startapps.pandemona.auth.AuthenticationService;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreFeature;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,10 +37,26 @@ class DrugstoreControllerTest {
     @MockBean
     AuthenticationService authenticationService;
 
-    @WithMockUser()
+    @WithMockUser
     @Test
     void getDrugstoresIsOk() throws Exception {
         mockMvc.perform(get("/api/drugstores")).andExpect(status().isOk());
+
+        verify(drugstoreService).findAll(any(Pageable.class), eq(Map.of()));
+    }
+
+    @WithMockUser
+    @Test
+    void listDrugstoresWithFilterIsOk() throws Exception {
+        Map<String, String> expectedParams = Map.of("city", "antananarivo", "keyword", "somekeyword");
+
+        mockMvc.perform(
+            get("/api/drugstores")
+                .queryParam("city", "antananarivo")
+                .queryParam("keyword", "somekeyword")
+        ).andExpect(status().isOk());
+
+        verify(drugstoreService).findAll(any(Pageable.class), eq(expectedParams));
     }
 
     @WithAnonymousUser
