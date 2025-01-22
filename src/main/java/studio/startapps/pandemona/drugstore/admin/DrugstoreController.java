@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import studio.startapps.pandemona.business.exception.BusinessNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/drugstores")
@@ -23,8 +24,11 @@ public class DrugstoreController {
     }
 
     @GetMapping
-    public Page<DrugstorePreview> index(@PageableDefault(size = ITEMS_PER_PAGE, sort = DEFAULT_SORT) Pageable page) {
-        return this.drugstoreService.findAll(page);
+    public Page<DrugstorePreview> index(
+        @RequestParam Map<String, String> filters,
+        @PageableDefault(size = ITEMS_PER_PAGE, sort = DEFAULT_SORT) Pageable page
+    ) {
+        return this.drugstoreService.findAll(page, filters);
     }
 
     @GetMapping("/features")
