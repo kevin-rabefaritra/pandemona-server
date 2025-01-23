@@ -3,6 +3,7 @@ package studio.startapps.pandemona.drugstore.mobile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import studio.startapps.pandemona.city.internal.CityEnum;
 import studio.startapps.pandemona.drugstore.admin.DrugstoreService;
 import studio.startapps.pandemona.drugstore.internal.Drugstore;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
@@ -48,7 +49,7 @@ public class LegacyDrugstoreMobileController {
         LocalDateTime lastUpdateDate = LocalDate.parse(lastUpdate).atStartOfDay();
         LocalDate today = DateUtils.today();
         Iterable<Drugstore> drugstores = this.onDutyDrugstoresMobileService.findDrugstoresByUpdatedAtGreaterThanEqual(lastUpdateDate);
-        Iterable<OnDutyDrugstores> onDutyDrugstores = this.onDutyDrugstoresMobileService.findOnDutyDrugstoresByUpdatedAtGreaterThanEqual(lastUpdateDate);
+        Iterable<OnDutyDrugstores> onDutyDrugstores = this.onDutyDrugstoresMobileService.findOnDutyDrugstoresByUpdatedAtGreaterThanEqual(lastUpdateDate, CityEnum.ANTANANARIVO);
 
         StringListConverter stringListConverter = new StringListConverter();
 
