@@ -1,9 +1,8 @@
 package studio.startapps.pandemona.feed;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,35 +13,19 @@ import studio.startapps.pandemona.feed.internal.FeedPage;
 import studio.startapps.pandemona.feed.internal.PostPreview;
 import studio.startapps.pandemona.util.DateUtils;
 
-import java.net.ConnectException;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FeedService {
 
+    private final FeedProperties feedProperties;
     private final RestTemplate restTemplate;
-    private final String feedEndpoint;
-
-    FeedService(
-        RestTemplate restTemplate,
-        @Value("${pandemonium.feed.endpoint}") String feedEndpoint
-    ) {
-        this.restTemplate = restTemplate;
-        this.feedEndpoint = feedEndpoint;
-    }
 
     FeedPage findAll(String language, Pageable pageable) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(HttpHeaders.ACCEPT_LANGUAGE, language);
         httpHeaders.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
@@ -53,18 +36,13 @@ public class FeedService {
         boolean last = true;
 
         try {
-            String url = UriComponentsBuilder.fromHttpUrl(this.feedEndpoint)
-                    .queryParam("page", "{page}")
+            String url = UriComponentsBuilder.fromHttpUrl(this.feedProperties.getEndpoint())
+                    .queryParam("channel", this.feedProperties.getChannel())
+                    .queryParam("page", pageable.getPageNumber())
                     .encode()
                     .toUriString();
 
-            ResponseEntity<JsonNode> response = this.restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                entity,
-                JsonNode.class,
-                Map.of("page", pageable.getPageNumber())
-            );
+            ResponseEntity<JsonNode> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, JsonNode.class);
 
             if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
                 throw new RestClientException("Failed with status code %s".formatted(response.getStatusCode()));
