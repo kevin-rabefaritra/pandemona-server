@@ -33,8 +33,8 @@ public class NumberMobileControllerTest {
     @Test
     void fetchNumbersShouldBeOk() throws Exception {
         given(numberMobileService.findAll()).willReturn(List.of(
-            new EmergencyNumberItem("First Emergency Number", "Nowhere, Somewhere", CityEnum.ANTANANARIVO, List.of("112", "113"), -1.11f, 1.11f, EmergencyNumberType.AMBULANCE),
-            new EmergencyNumberItem("SOS Firefighters", "Nosy Be, Somewhere", CityEnum.NOSY_BE, List.of("9919191", "11111"), -1.11f, 1.11f, EmergencyNumberType.FIREFIGHTERS)
+            new EmergencyNumberItem(1L, "First Emergency Number", "Nowhere, Somewhere", CityEnum.ANTANANARIVO, List.of("112", "113"), -1.11f, 1.11f, EmergencyNumberType.AMBULANCE),
+            new EmergencyNumberItem(2L, "SOS Firefighters", "Nosy Be, Somewhere", CityEnum.NOSY_BE, List.of("9919191", "11111"), -1.11f, 1.11f, EmergencyNumberType.FIREFIGHTERS)
         ));
 
         mockMvc.perform(
@@ -42,8 +42,8 @@ public class NumberMobileControllerTest {
         ).andExpect(status().isOk())
         .andExpect(content().json("""
                 [
-                {'name': 'First Emergency Number', 'address': 'Nowhere, Somewhere', 'city': 'ANTANANARIVO', 'contacts': ['112', '113'], 'latitude': -1.11, 'longitude': 1.11, 'type': 'AMBULANCE'},
-                {'name': 'SOS Firefighters', 'address': 'Nosy Be, Somewhere', 'city': 'NOSY_BE', 'contacts': ['9919191', '11111'], 'latitude': -1.11, 'longitude': 1.11, 'type': 'FIREFIGHTERS'}
+                {'id': 1, 'name': 'First Emergency Number', 'address': 'Nowhere, Somewhere', 'city': 'ANTANANARIVO', 'contacts': ['112', '113'], 'latitude': -1.11, 'longitude': 1.11, 'type': 'AMBULANCE'},
+                {'id': 2, 'name': 'SOS Firefighters', 'address': 'Nosy Be, Somewhere', 'city': 'NOSY_BE', 'contacts': ['9919191', '11111'], 'latitude': -1.11, 'longitude': 1.11, 'type': 'FIREFIGHTERS'}
                 ]
                 """));
     }

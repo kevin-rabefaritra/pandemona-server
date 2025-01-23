@@ -7,6 +7,7 @@ import studio.startapps.pandemona.number.internal.EmergencyNumber;
 import java.util.List;
 
 public record EmergencyNumberItem(
+    long id,
     String name,
     String address,
     CityEnum city,
@@ -17,6 +18,7 @@ public record EmergencyNumberItem(
 ) {
     public EmergencyNumberItem(EmergencyNumber emergencyNumber) {
         this(
+            emergencyNumber.getId(),
             emergencyNumber.getName(),
             emergencyNumber.getAddress(),
             emergencyNumber.getCity(),

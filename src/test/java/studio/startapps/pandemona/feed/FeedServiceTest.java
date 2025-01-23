@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
@@ -36,6 +37,9 @@ public class FeedServiceTest {
     @Value("${pandemonium.feed.endpoint}")
     String endpoint;
 
+    @Value("${pandemonium.feed.channel}")
+    String channel;
+
     MockRestServiceServer mockRestServiceServer;
 
     @BeforeEach
@@ -46,7 +50,7 @@ public class FeedServiceTest {
     @DisplayName("Fetch feed should return FeedPage")
     @Test
     void fetchFeedShouldReturnFeedPage() throws Exception {
-        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(String.format("%s?page=0", endpoint)))
+        mockRestServiceServer.expect(ExpectedCount.once(), requestTo(String.format("%s?channel=%s&page=0", endpoint, channel)))
             .andExpect(method(HttpMethod.GET))
             .andRespond(
                 withStatus(HttpStatus.OK)
