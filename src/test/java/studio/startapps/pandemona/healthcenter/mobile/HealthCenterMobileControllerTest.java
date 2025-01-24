@@ -35,8 +35,8 @@ public class HealthCenterMobileControllerTest {
     @Test
     void fetchHealthCentersShouldBeOk() throws Exception {
         given(healthCenterMobileService.findAll()).willReturn(List.of(
-            new HealthCenterItem(1L, "Clinic 101", "Nowhere, Somewhere", CityEnum.ANTSIRABE, List.of("03399399393", "11001010101"), 28.4f, 18.2f, HealthCenterType.CLINIC),
-            new HealthCenterItem(2L, "Toliara Hospital", "Nowhere, Somewhere", CityEnum.TOLIARA, List.of("111"), 28.4f, 8.2f, HealthCenterType.HOSPITAL)
+            new HealthCenterItem("1", "Clinic 101", "Nowhere, Somewhere", CityEnum.ANTSIRABE, List.of("03399399393", "11001010101"), 28.4f, 18.2f, HealthCenterType.CLINIC),
+            new HealthCenterItem("2", "Toliara Hospital", "Nowhere, Somewhere", CityEnum.TOLIARA, List.of("111"), 28.4f, 8.2f, HealthCenterType.HOSPITAL)
         ));
 
         mockMvc.perform(
@@ -44,8 +44,8 @@ public class HealthCenterMobileControllerTest {
         ).andExpect(status().isOk())
         .andExpect(content().json("""
                 [
-                {'id': 1, 'name': 'Clinic 101', 'address': 'Nowhere, Somewhere', 'city': 'ANTSIRABE', 'contacts': ['03399399393', '11001010101'], 'latitude': 28.4, 'longitude': 18.2, 'type': 'CLINIC'},
-                {'id': 2, 'name': 'Toliara Hospital', 'address': 'Nowhere, Somewhere', 'city': 'TOLIARA', 'contacts': ['111'], 'latitude': 28.4, 'longitude': 8.2, 'type': 'HOSPITAL'}
+                {'id': '1', 'name': 'Clinic 101', 'address': 'Nowhere, Somewhere', 'city': 'ANTSIRABE', 'contacts': ['03399399393', '11001010101'], 'latitude': 28.4, 'longitude': 18.2, 'type': 'CLINIC'},
+                {'id': '2', 'name': 'Toliara Hospital', 'address': 'Nowhere, Somewhere', 'city': 'TOLIARA', 'contacts': ['111'], 'latitude': 28.4, 'longitude': 8.2, 'type': 'HOSPITAL'}
                 ]
                 """));
     }

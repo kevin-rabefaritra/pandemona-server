@@ -7,7 +7,7 @@ import studio.startapps.pandemona.healthcenter.internal.HealthCenterType;
 import java.util.List;
 
 public record HealthCenterItem(
-    long id,
+    String id,
     String name,
     String address,
     CityEnum city,
@@ -18,7 +18,7 @@ public record HealthCenterItem(
 ) {
     public HealthCenterItem(HealthCenter healthCenter) {
         this(
-            healthCenter.getId(),
+            Long.toString(healthCenter.getId()),
             healthCenter.getName(),
             healthCenter.getAddress(),
             healthCenter.getCity(),
