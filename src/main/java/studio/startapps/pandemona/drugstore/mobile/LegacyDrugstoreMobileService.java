@@ -21,7 +21,12 @@ public class LegacyDrugstoreMobileService {
     private final DrugstoreRepository drugstoreRepository;
 
     Iterable<Drugstore> findDrugstoresByUpdatedAtGreaterThanEqual(LocalDateTime dateTime) {
-        return this.drugstoreRepository.findByUpdatedAtGreaterThanEqual(dateTime);
+        List<Drugstore> drugstores = this.drugstoreRepository.findByUpdatedAtGreaterThanEqual(dateTime);
+
+        // Format phone number for legacy client
+        return drugstores.stream().peek((drugstore) -> {
+            drugstore.setContacts(drugstore.getContacts().stream().map(this::formatContact).toList());
+        }).toList();
     }
 
     Iterable<OnDutyDrugstores> findOnDutyDrugstoresByUpdatedAtGreaterThanEqual(LocalDateTime dateTime, CityEnum city) {
@@ -40,5 +45,21 @@ public class LegacyDrugstoreMobileService {
 
     Iterable<OnDutyDrugstores> findAllDeletedOnDutyDrugstores() {
         return this.onDutyDrugstoresRepository.findAllDeleted();
+    }
+
+    private String formatContact(String contact) {
+        if (contact.contains("@")) {
+            // Email address
+            return contact;
+        }
+
+        String reducedContact = contact.replaceAll(" ", "");
+        if (reducedContact.length() == 10) {
+            return String.format("%s %s %s %s", reducedContact.substring(0, 3), reducedContact.substring(3, 5), reducedContact.substring(5, 8), reducedContact.substring(8));
+        }
+        else if (reducedContact.length() == 7) {
+            return String.format("%s %s %s", reducedContact.substring(0, 2), reducedContact.substring(2, 5), reducedContact.substring(5, 7));
+        }
+        return contact;
     }
 }
