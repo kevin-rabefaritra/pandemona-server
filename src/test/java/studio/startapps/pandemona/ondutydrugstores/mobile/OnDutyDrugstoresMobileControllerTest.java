@@ -33,16 +33,16 @@ public class OnDutyDrugstoresMobileControllerTest {
     @Test
     void fetchOnDutyDrugstoresShouldBeOk() throws Exception {
         given(onDutyDrugstoresMobileService.findAll(any(Pageable.class))).willReturn(List.of(
-            new OnDutyDrugstoresItem(LocalDate.of(2024, 1, 1), LocalDate.of(2024,  6, 1), List.of("1", "2", "3", "4")),
-            new OnDutyDrugstoresItem(LocalDate.of(2024, 2, 1), LocalDate.of(2024,  5, 1), List.of("7", "8"))
+            new OnDutyDrugstoresItem("1", LocalDate.of(2024, 1, 1), LocalDate.of(2024,  6, 1), List.of("1", "2", "3", "4")),
+            new OnDutyDrugstoresItem("2", LocalDate.of(2024, 2, 1), LocalDate.of(2024,  5, 1), List.of("7", "8"))
         ));
 
         mockMvc.perform(
             get("/api/mobile/v1/on-duty-drugstores")
         ).andExpect(status().isOk())
         .andExpect(content().json("""
-                [{'startDate': '2024-01-01', 'endDate': '2024-06-01', 'drugstoreIds': ['1', '2', '3', '4']},
-                {'startDate': '2024-02-01', 'endDate': '2024-05-01', 'drugstoreIds': ['7', '8']}
+                [{'id': '1', 'startDate': '2024-01-01', 'endDate': '2024-06-01', 'drugstoreIds': ['1', '2', '3', '4']},
+                {'id': '2', 'startDate': '2024-02-01', 'endDate': '2024-05-01', 'drugstoreIds': ['7', '8']}
                 ]"""));
     }
 }
