@@ -70,7 +70,8 @@ public class FeedServiceTest {
                 LocalDateTime.of(2024, 12, 10, 15, 0, 26),
                 "<SOME INTERESTING SUMMARY>",
                 List.of("health","international","humanitarian","Madagascar","surgery","Africa Mercy","Mercy Ships","Toamasina","public health","training","education","NGO","maintenance","medical","surgical interventions","partnership","long-term development","news","updates"),
-                List.of("https://cdn.niuz.app/2024/12/10/67b8044464682798bf4e75e9ed48c749")
+                List.of("https://cdn.niuz.app/2024/12/10/67b8044464682798bf4e75e9ed48c749"),
+                "http://127.0.0.1:8081/en/posts/3d3f5a2a28f45c1233c7ea9e1f6a2b2f"
         );
         FeedPage expectedPage = new FeedPage(List.of(expectedPostPreview), true);
         assertEquals(expectedPage, feedPage);

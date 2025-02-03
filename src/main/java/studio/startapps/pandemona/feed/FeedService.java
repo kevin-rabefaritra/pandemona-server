@@ -12,10 +12,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import studio.startapps.pandemona.feed.internal.FeedPage;
 import studio.startapps.pandemona.feed.internal.PostPreview;
 import studio.startapps.pandemona.util.DateUtils;
+import studio.startapps.pandemona.util.LangUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
@@ -50,7 +50,7 @@ public class FeedService {
 
             JsonNode responseContent = response.getBody();
             responseContent.get("content").elements().forEachRemaining((jsonNode -> {
-                content.add(this.toPostPreview(jsonNode));
+                content.add(this.toPostPreview(language, jsonNode));
             }));
             last = responseContent.get("last").asBoolean();
         }
@@ -61,8 +61,14 @@ public class FeedService {
         return new FeedPage(content, last);
     }
 
-    private PostPreview toPostPreview(JsonNode jsonNode) {
+    private PostPreview toPostPreview(String language, JsonNode jsonNode) {
         JsonNode postNode = jsonNode.get("post");
+
+        // Get first supported lang
+        String langCode = LangUtils.getFirstSupportedLangs(language, this.feedProperties.supportedLangsList());
+
+        String reference = postNode.get("reference").asText();
+        String postDetailsUrl = String.format(this.feedProperties.getPostDetailsUrl(), langCode, reference);
 
         final List<String> postTags = new ArrayList<>();
         final List<String> mediaUris = new ArrayList<>();
@@ -71,13 +77,14 @@ public class FeedService {
         postNode.get("mediaUris").forEach((tag) -> mediaUris.add(tag.asText()));
 
         return new PostPreview(
-            postNode.get("reference").asText(),
+            reference,
             postNode.get("authorName").asText(),
             postNode.get("authorProfilePicture").asText(),
             DateUtils.parseDateTimeISO(postNode.get("publishedOn").asText()),
             postNode.get("summary").asText(),
             postTags,
-            mediaUris
+            mediaUris,
+            postDetailsUrl
         );
     }
 }
