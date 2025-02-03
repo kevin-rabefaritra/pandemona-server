@@ -10,6 +10,7 @@ public record PostPreview(
     LocalDateTime publishedOn,
     String summary,
     List<String> tags,
-    List<String> mediaUris
+    List<String> mediaUris,
+    String sourceUrl
 ) {
 }
