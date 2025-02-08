@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,13 +19,13 @@ import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresDetails;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresItemPreview;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresPreview;
+import studio.startapps.pandemona.util.DataPage;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.BDDMockito.*;
 
@@ -88,5 +90,32 @@ class OnDutyDrugstoresControllerTest {
         ).andExpect(status().isCreated());
 
         verify(onDutyDrugstoresService).save(request);
+    }
+
+    @WithMockUser
+    @Test
+    void findByStartDateEndDateShouldReturnOnDutyDrugstores() throws Exception {
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("start", "2025-01-01");
+        params.put("end", "2025-01-08");
+
+        given(onDutyDrugstoresService.findAll(eq(params), any(Pageable.class))).willReturn(
+            new DataPage<OnDutyDrugstoresPreview>(
+                List.of(
+                    new OnDutyDrugstoresPreview(1L, LocalDate.of(2025, 1, 1), LocalDate.of(2025, 1, 8), List.of("Drugstore A", "Drugstore B"))
+                ),
+                1, 0, true, true, 1, 1
+            )
+        );
+
+        mockMvc.perform(
+            get("/api/onduty-drugstores")
+                    .param("start", "2025-01-01")
+                    .param("end", "2025-01-08")
+                    .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk())
+        .andExpect(content().json("{'totalPages':1,'number':0,'first':true,'last':true,'totalElements':1,'numberOfElements':1,'content':[{'id':1,'startDate':'2025-01-01','endDate':'2025-01-08','drugstores':['Drugstore A','Drugstore B']}]}"));
+
+        verify(onDutyDrugstoresService).findAll(eq(params), any());
     }
 }

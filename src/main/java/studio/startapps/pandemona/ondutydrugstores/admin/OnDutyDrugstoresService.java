@@ -3,19 +3,19 @@ package studio.startapps.pandemona.ondutydrugstores.admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.drugstore.internal.Drugstore;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreRepository;
 import studio.startapps.pandemona.ondutydrugstores.exception.OnDutyDrugstoresNotFoundException;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresDetails;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresPreview;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresRepository;
+import studio.startapps.pandemona.ondutydrugstores.internal.*;
+import studio.startapps.pandemona.util.DataPage;
 import studio.startapps.pandemona.util.DateUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,8 +25,10 @@ public class OnDutyDrugstoresService {
     private final DrugstoreRepository drugstoreRepository;
     private final OnDutyDrugstoresRepository onDutyDrugstoresRepository;
 
-    public Page<OnDutyDrugstoresPreview> findAll(Pageable pageable) {
-        return this.onDutyDrugstoresRepository.findAll(pageable).map(OnDutyDrugstoresPreview::new);
+    public DataPage<OnDutyDrugstoresPreview> findAll(Map<String, String> params, Pageable pageable) {
+        Specification<OnDutyDrugstores> specification = OnDutyDrugstoresSpecs.withParams(params);
+        Page<OnDutyDrugstoresPreview> onDutyDrugstoresPreviews = this.onDutyDrugstoresRepository.findAll(specification, pageable).map(OnDutyDrugstoresPreview::new);
+        return new DataPage<>(onDutyDrugstoresPreviews);
     }
 
     void save(OnDutyDrugstoresRequest request) {

@@ -11,9 +11,11 @@ import studio.startapps.pandemona.ondutydrugstores.exception.OnDutyDrugstoresNot
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresDetails;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresPreview;
+import studio.startapps.pandemona.util.DataPage;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,8 +32,8 @@ public class OnDutyDrugstoreController {
     }
 
     @GetMapping
-    public Page<OnDutyDrugstoresPreview> findAll(@PageableDefault(size = PAGE_SIZE, sort = SORT_BY, direction = Sort.Direction.DESC) Pageable pageable) {
-        return onDutyDrugstoresService.findAll(pageable);
+    public DataPage<OnDutyDrugstoresPreview> findAll(@RequestParam Map<String, String> params, @PageableDefault(size = PAGE_SIZE, sort = SORT_BY, direction = Sort.Direction.DESC) Pageable pageable) {
+        return onDutyDrugstoresService.findAll(params, pageable);
     }
 
     @GetMapping(path = "/{onDutyDrugstoresId}")
