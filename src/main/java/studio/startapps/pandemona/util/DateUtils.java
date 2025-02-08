@@ -48,4 +48,8 @@ public interface DateUtils {
     static LocalDateTime parseDateTimeISO(String dateTime) {
         return LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
     }
+
+    static  LocalDate parseDate(String date) {
+        return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+    }
 }
