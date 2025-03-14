@@ -25,6 +25,10 @@ public class OnDutyDrugstoresSpecs {
                         Predicate endPredicate = criteriaBuilder.equal(root.get("endDate"), DateUtils.parseDate(value));
                         specificationList.add(endPredicate);
                         break;
+                    case "minDate":
+                        Predicate minDatePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("endDate"), DateUtils.parseDate(value));
+                        specificationList.add(minDatePredicate);
+                        break;
                     default:
                         log.info("[OnDutyDrugstoresSpecs] Ignored parameter {}", key);
                         break;
