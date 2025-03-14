@@ -31,6 +31,11 @@ public class OnDutyDrugstoresService {
         return new DataPage<>(onDutyDrugstoresPreviews);
     }
 
+    List<OnDutyDrugstoresPreview> findAll(Map<String, String> params) {
+        Specification<OnDutyDrugstores> specification = OnDutyDrugstoresSpecs.withParams(params);
+        return this.onDutyDrugstoresRepository.findAll(specification).stream().map(OnDutyDrugstoresPreview::new).toList();
+    }
+
     void save(OnDutyDrugstoresRequest request) {
         Set<Drugstore> drugstores = this.drugstoreRepository.findByIdIn(request.drugstores());
 

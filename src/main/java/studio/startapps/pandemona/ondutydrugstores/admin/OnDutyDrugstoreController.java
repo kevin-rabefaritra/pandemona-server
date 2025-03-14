@@ -36,6 +36,11 @@ public class OnDutyDrugstoreController {
         return onDutyDrugstoresService.findAll(params, pageable);
     }
 
+    @GetMapping("/all")
+    public List<OnDutyDrugstoresPreview> findAll(@RequestParam Map<String, String> params) {
+        return onDutyDrugstoresService.findAll(params);
+    }
+
     @GetMapping(path = "/{onDutyDrugstoresId}")
     public OnDutyDrugstoresDetails get(@PathVariable long onDutyDrugstoresId) throws OnDutyDrugstoresNotFoundException {
         return onDutyDrugstoresService.findById(onDutyDrugstoresId);
