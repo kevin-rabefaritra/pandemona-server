@@ -3,6 +3,7 @@ package studio.startapps.pandemona.configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -30,7 +31,13 @@ public class WebConfig implements WebMvcConfigurer {
                     .allowCredentials(true);
         });
 
-        // Mobile endpoint (GET only)
+        // Mobile endpoints
+        // Report feature
+        registry.addMapping("/api/mobile/*/report")
+                .allowedOrigins("*")
+                .allowedMethods("POST");
+
+        // GET
         List<String> openEndpoints = List.of("/api/v3/**", "/api/mobile/**");
         openEndpoints.forEach((endpoint) -> {
             registry.addMapping(endpoint)

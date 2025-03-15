@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.*;
 
 @WebMvcTest(controllers = VersionMobileController.class)
 @Import(SecurityConfig.class)
-public class VersionMobileControllerTest {
+class VersionMobileControllerTest {
 
     @MockBean
     AuthenticationService authenticationService;

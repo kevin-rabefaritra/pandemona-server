@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
@@ -46,7 +48,13 @@ public class SecurityConfig {
     private static class UnauthorizedUserHandler implements AccessDeniedHandler {
         @Override
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+            }
+            else {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            }
         }
     }
 }
