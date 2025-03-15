@@ -55,6 +55,13 @@ create table if not exists health_center (
     deleted     boolean default false
 );
 
+create table if not exists report (
+    id          serial primary key,
+    title       varchar(255) not null,
+    comment     varchar(500) not null,
+    created_at  timestamp
+);
+
 
 -- CREATE SEQUENCE IF NOT EXISTS drugstore_seq START 1030;
 -- CREATE SEQUENCE IF NOT EXISTS onduty_drugstores_seq START 50;
