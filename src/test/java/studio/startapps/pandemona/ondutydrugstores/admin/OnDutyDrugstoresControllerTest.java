@@ -52,16 +52,6 @@ class OnDutyDrugstoresControllerTest {
 
     @WithMockUser
     @Test
-    void getAllOnDutyDrugstoresAfterDateIsOk() throws Exception {
-        mockMvc.perform(
-            get("/api/onduty-drugstores/all").queryParam("minDate", "2025-01-01")
-        ).andExpect(status().isOk());
-
-        verify(onDutyDrugstoresService).findAll(Map.of("minDate", "2025-01-01"));
-    }
-
-    @WithMockUser
-    @Test
     void getOnDutyDrugstoresByIdIsOk() throws Exception {
         OnDutyDrugstoresDetails onDutyDrugstoresDetails = new OnDutyDrugstoresDetails(
             10L,

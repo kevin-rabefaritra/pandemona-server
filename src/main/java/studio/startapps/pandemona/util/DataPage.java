@@ -10,7 +10,7 @@ public record DataPage<T>(
     int number,
     boolean first,
     boolean last,
-    int totalElements,
+    long totalElements,
     int numberOfElements
 ) {
     public DataPage(Page<T> page) {
@@ -20,7 +20,7 @@ public record DataPage<T>(
             page.getNumber(),
             page.isFirst(),
             page.isLast(),
-            page.getTotalPages(),
+            page.getTotalElements(),
             page.getNumberOfElements()
         );
     }
