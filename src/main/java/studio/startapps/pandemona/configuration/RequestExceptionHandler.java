@@ -25,7 +25,7 @@ public class RequestExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final Logger exceptionLogger = LoggerFactory.getLogger(RequestExceptionHandler.class);
 
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({InvalidAuthCredentialsException.class, TokenSubjectMismatchException.class, TokenExpiredException.class})
     protected void handleUnauthorized() {
         this.exceptionLogger.info("[RestExceptionHandler.handleUnauthorized]");
