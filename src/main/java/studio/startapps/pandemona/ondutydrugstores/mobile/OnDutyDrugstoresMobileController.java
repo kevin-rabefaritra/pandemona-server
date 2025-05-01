@@ -17,7 +17,7 @@ public class OnDutyDrugstoresMobileController {
     private final OnDutyDrugstoresMobileService onDutyDrugstoresMobileService;
 
     @GetMapping
-    List<OnDutyDrugstoresItem> findAll(Pageable pageable) {
+    List<OnDutyDrugstoresItem> findAll(@PageableDefault(sort = "startDate") Pageable pageable) {
         return this.onDutyDrugstoresMobileService.findAll(pageable);
     }
 }
