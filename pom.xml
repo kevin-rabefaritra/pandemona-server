@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>studio.startapps</groupId>
 	<artifactId>pandemona</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>pandemona</name>
-	<description>Pharmada</description>
+	<version>1.0.1-SNAPSHOT</version>
+	<name>Pharmada</name>
+	<description>Pharmada server</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
