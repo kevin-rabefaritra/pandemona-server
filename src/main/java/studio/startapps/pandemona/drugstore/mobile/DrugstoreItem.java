@@ -11,8 +11,8 @@ public record DrugstoreItem(
     String city,
     List<String> contacts,
     List<String> features,
-    float latitude,
-    float longitude
+    Float latitude,
+    Float longitude
 ) {
     public DrugstoreItem(Drugstore drugstore) {
         this(
