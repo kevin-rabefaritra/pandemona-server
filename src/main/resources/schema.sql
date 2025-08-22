@@ -57,7 +57,7 @@ create table if not exists health_center (
 
 create table if not exists report (
     id          serial primary key,
-    title       varchar(255) not null,
+    title       varchar(500) not null,
     comment     varchar(500) not null,
     created_at  timestamp
 );
