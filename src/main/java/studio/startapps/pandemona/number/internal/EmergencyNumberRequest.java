@@ -9,8 +9,8 @@ public record EmergencyNumberRequest(
     String address,
     List<String> contacts,
     CityEnum city,
-    float latitude,
-    float longitude,
+    Float latitude,
+    Float longitude,
     EmergencyNumberType type
 ) {
 }

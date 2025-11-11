@@ -46,10 +46,8 @@ public abstract class Business {
     @Convert(converter = StringListConverter.class)
     private List<String> contacts;
 
-    @NotNull
     private Float latitude;
 
-    @NotNull
     private Float longitude;
 
     @NotNull

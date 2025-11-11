@@ -9,8 +9,8 @@ public record DrugstoreRequest(
     String name,
     String address,
     CityEnum city,
-    float latitude,
-    float longitude,
+    Float latitude,
+    Float longitude,
     List<String> contacts,
     List<String> features
 ) {

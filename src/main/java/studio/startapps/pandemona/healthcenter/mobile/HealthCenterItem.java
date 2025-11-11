@@ -12,8 +12,8 @@ public record HealthCenterItem(
     String address,
     CityEnum city,
     List<String> contacts,
-    float latitude,
-    float longitude,
+    Float latitude,
+    Float longitude,
     HealthCenterType type
 ) {
     public HealthCenterItem(HealthCenter healthCenter) {

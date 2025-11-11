@@ -12,8 +12,8 @@ public record EmergencyNumberItem(
     String address,
     CityEnum city,
     List<String> contacts,
-    float latitude,
-    float longitude,
+    Float latitude,
+    Float longitude,
     EmergencyNumberType type
 ) {
     public EmergencyNumberItem(EmergencyNumber emergencyNumber) {
