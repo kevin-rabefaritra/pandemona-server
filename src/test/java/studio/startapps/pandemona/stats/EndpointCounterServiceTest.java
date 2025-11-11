@@ -1,6 +1,7 @@
 package studio.startapps.pandemona.stats;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +27,7 @@ class EndpointCounterServiceTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @AfterEach
+    @BeforeEach
     void destroy() {
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "endpoint_counter");
     }
