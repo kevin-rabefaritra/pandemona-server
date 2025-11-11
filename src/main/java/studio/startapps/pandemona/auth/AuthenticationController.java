@@ -36,7 +36,7 @@ public class AuthenticationController {
         return this.authenticationService.renewAccessToken(username, refreshToken);
     }
 
-    @PostMapping("/check/refresh")
+    @PostMapping(path = "/check/refresh")
     public void checkRefreshToken(@RequestBody CheckRefreshTokenRequest request) throws TokenExpiredException {
         this.authenticationService.checkRefreshTokenExpired(request);
     }
