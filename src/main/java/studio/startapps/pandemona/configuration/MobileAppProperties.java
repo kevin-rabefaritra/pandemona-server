@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.properties;
+package studio.startapps.pandemona.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

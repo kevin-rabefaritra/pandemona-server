@@ -8,9 +8,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import studio.startapps.pandemona.auth.request.CheckRefreshTokenRequest;
 import studio.startapps.pandemona.configuration.SecurityConfig;
 import studio.startapps.pandemona.auth.internal.TokenExpiredException;
 import studio.startapps.pandemona.auth.internal.AuthTokenSet;
+import studio.startapps.pandemona.util.RequestToken;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -29,7 +31,7 @@ class AuthenticationControllerTest {
     AuthenticationService authenticationService;
 
     @Test
-    void testLoginIsOk() throws Exception {
+    void loginIsOk() throws Exception {
         String username = "user";
         String password = "password";
 
@@ -43,7 +45,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void testRefreshTokenIsOk() throws Exception {
+    void refreshTokenIsOk() throws Exception {
         String username = "user";
         String refreshToken = "def";
 
@@ -56,7 +58,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void testRefreshTokenExpiredShouldFail() throws Exception {
+    void refreshTokenExpiredShouldFail() throws Exception {
         String username = "user";
         String refreshToken = "def";
 
@@ -65,6 +67,34 @@ class AuthenticationControllerTest {
         mockMvc.perform(post("/api/auth/refresh")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(String.format("{\"username\": \"%s\", \"refreshToken\": \"%s\"}", username, refreshToken)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void checkRefreshTokenShouldBeOk() throws Exception {
+        CheckRefreshTokenRequest checkRefreshTokenRequest = new CheckRefreshTokenRequest("my-refresh-token");
+
+        mockMvc.perform(post("/api/auth/check/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        { "refreshToken": "my-refresh-token" }
+                        """))
+                .andExpect(status().isOk());
+
+        verify(authenticationService).checkRefreshTokenExpired(checkRefreshTokenRequest);
+    }
+
+    @Test
+    void checkRefreshTokenShouldBeUnauthorized() throws Exception {
+        CheckRefreshTokenRequest checkRefreshTokenRequest = new CheckRefreshTokenRequest("my-refresh-token");
+
+        doThrow(TokenExpiredException.class).when(authenticationService).checkRefreshTokenExpired(checkRefreshTokenRequest);
+
+        mockMvc.perform(post("/api/auth/check/refresh")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        { "refreshToken": "my-refresh-token" }
+                        """))
                 .andExpect(status().isUnauthorized());
     }
 

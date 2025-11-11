@@ -7,8 +7,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import studio.startapps.pandemona.business.exception.BusinessNotFoundException;
-import studio.startapps.pandemona.healthcenter.internal.HealthCenter;
-import studio.startapps.pandemona.healthcenter.internal.HealthCenterRepository;
 import studio.startapps.pandemona.healthcenter.internal.HealthCenterRequest;
 
 import java.util.List;

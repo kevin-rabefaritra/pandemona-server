@@ -2,7 +2,7 @@ package studio.startapps.pandemona.version.mobile;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import studio.startapps.pandemona.properties.MobileAppProperties;
+import studio.startapps.pandemona.configuration.MobileAppProperties;
 import studio.startapps.pandemona.version.internal.AppVersion;
 
 @Service

@@ -1,6 +1,7 @@
 package studio.startapps.pandemona.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -43,7 +44,7 @@ public interface JwtUtil {
      * @param jwt The token to be decoded
      * @return Payload of the token
      */
-    private static Claims decode(String jwt, SecretKey secretKey) {
+    private static Claims decode(String jwt, SecretKey secretKey) throws JwtException {
         return Jwts.parser()
             .verifyWith(secretKey)
             .build()

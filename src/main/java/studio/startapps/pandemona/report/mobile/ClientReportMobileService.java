@@ -2,14 +2,11 @@ package studio.startapps.pandemona.report.mobile;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.report.internal.ClientReport;
 import studio.startapps.pandemona.report.internal.ClientReportRepository;
 import studio.startapps.pandemona.report.internal.ClientReportSpecification;
 import studio.startapps.pandemona.util.StringUtils;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

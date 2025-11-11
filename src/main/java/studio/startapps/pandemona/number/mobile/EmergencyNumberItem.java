@@ -1,8 +1,8 @@
 package studio.startapps.pandemona.number.mobile;
 
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.number.internal.EmergencyNumberType;
 import studio.startapps.pandemona.number.internal.EmergencyNumber;
+import studio.startapps.pandemona.number.internal.EmergencyNumberType;
 
 import java.util.List;
 

@@ -1,20 +1,20 @@
 package studio.startapps.pandemona.auth;
 
+import io.jsonwebtoken.JwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import studio.startapps.pandemona.auth.internal.InvalidAuthCredentialsException;
-import studio.startapps.pandemona.auth.internal.TokenExpiredException;
-import studio.startapps.pandemona.auth.internal.TokenSubjectMismatchException;
-import studio.startapps.pandemona.auth.internal.AuthTokenSet;
-import studio.startapps.pandemona.user.User;
+import studio.startapps.pandemona.auth.internal.*;
+import studio.startapps.pandemona.auth.request.CheckRefreshTokenRequest;
 import studio.startapps.pandemona.util.JwtUtil;
 import studio.startapps.pandemona.util.RequestToken;
 
 import javax.crypto.SecretKey;
 
+@Slf4j
 @Service
 public class AuthenticationService implements UserDetailsService {
 
@@ -108,5 +108,20 @@ public class AuthenticationService implements UserDetailsService {
 
     public RequestToken toRefreshToken(String jwt) {
         return JwtUtil.toRequestToken(jwt, this.refreshSecretKey);
+    }
+
+    public void checkRefreshTokenExpired(CheckRefreshTokenRequest request) throws TokenExpiredException {
+        String refreshToken = request.refreshToken();
+        try {
+            RequestToken requestToken = JwtUtil.toRequestToken(refreshToken, this.refreshSecretKey);
+            if (hasRefreshTokenExpired(requestToken)) {
+                log.warn("[checkRefreshTokenExpired] Refresh token has expired");
+                throw new TokenExpiredException();
+            }
+        }
+        catch (JwtException e) {
+            log.warn("[checkRefreshTokenExpired] Failed with exception {}", e.getMessage());
+            throw new TokenExpiredException();
+        }
     }
 }

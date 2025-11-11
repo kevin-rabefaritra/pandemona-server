@@ -1,7 +1,6 @@
 package studio.startapps.pandemona.ondutydrugstores.internal;
 
 import studio.startapps.pandemona.drugstore.admin.DrugstorePreview;
-import studio.startapps.pandemona.drugstore.internal.Drugstore;
 
 import java.time.LocalDate;
 import java.util.List;

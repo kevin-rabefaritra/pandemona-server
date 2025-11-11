@@ -2,19 +2,19 @@ package studio.startapps.pandemona.drugstore.mobile;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import studio.startapps.pandemona.business.StringListConverter;
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.drugstore.admin.DrugstoreService;
 import studio.startapps.pandemona.drugstore.internal.Drugstore;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
-import studio.startapps.pandemona.business.StringListConverter;
-import studio.startapps.pandemona.ondutydrugstores.admin.OnDutyDrugstoresService;
-import studio.startapps.pandemona.ondutydrugstores.mobile.OnDutyDrugstoresMobileService;
+import studio.startapps.pandemona.stats.internal.TrackEndpointUsage;
 import studio.startapps.pandemona.util.DateUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +43,7 @@ public class LegacyDrugstoreMobileController {
     }
 
     @GetMapping("/fetch/pharmada/{lastUpdate}")
+    @TrackEndpointUsage
     public Map<String, Object> fetch(@PathVariable String lastUpdate) {
         Map<String, Object> result = new HashMap<>();
 

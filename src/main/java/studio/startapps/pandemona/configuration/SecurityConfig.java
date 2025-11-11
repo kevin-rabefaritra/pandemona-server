@@ -36,7 +36,7 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequests -> {
                 authorizeRequests.requestMatchers("/api/v3/**", "/api/mobile/**").permitAll();
-                authorizeRequests.requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh").permitAll();
+                authorizeRequests.requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/refresh", "/api/auth/check/refresh").permitAll();
                 authorizeRequests.anyRequest().authenticated();
             })
             .exceptionHandling(e -> e.accessDeniedHandler(this.unauthorizedUserHandler).authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

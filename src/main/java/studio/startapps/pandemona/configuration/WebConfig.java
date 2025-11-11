@@ -3,7 +3,6 @@ package studio.startapps.pandemona.configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         log.info("[addCorsMappings] Adding client endpoint {}", this.clientOrigin);
 
-        List<String> protectedEndpoints = List.of("/api/auth/*", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**");
+        List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**");
         protectedEndpoints.forEach((endpoint) -> {
             registry.addMapping(endpoint)
                     .allowedOrigins(this.clientOrigin)

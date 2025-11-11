@@ -3,6 +3,7 @@ package studio.startapps.pandemona.report.mobile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import studio.startapps.pandemona.stats.internal.TrackEndpointUsage;
 
 @RestController
 @RequestMapping("api/mobile/v1/report")
@@ -13,6 +14,7 @@ public class ClientReportMobileController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @TrackEndpointUsage
     void save(@RequestBody SaveReportRequest request) {
         this.reportMobileService.submit(request);
     }

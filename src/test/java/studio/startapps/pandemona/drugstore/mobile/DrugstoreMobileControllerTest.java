@@ -7,7 +7,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.configuration.PandemonaConfig;
 import studio.startapps.pandemona.configuration.SecurityConfig;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import static org.mockito.BDDMockito.*;
 
 @WebMvcTest(controllers = DrugstoreMobileController.class)
 @Import(SecurityConfig.class)
-public class DrugstoreMobileControllerTest {
+class DrugstoreMobileControllerTest {
 
     @MockBean
     AuthenticationService authenticationService;

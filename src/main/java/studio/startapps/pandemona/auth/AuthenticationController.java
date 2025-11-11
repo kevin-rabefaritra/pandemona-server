@@ -1,10 +1,14 @@
 package studio.startapps.pandemona.auth;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import studio.startapps.pandemona.auth.internal.AuthTokenSet;
 import studio.startapps.pandemona.auth.internal.InvalidAuthCredentialsException;
 import studio.startapps.pandemona.auth.internal.TokenExpiredException;
 import studio.startapps.pandemona.auth.internal.TokenSubjectMismatchException;
-import studio.startapps.pandemona.auth.internal.AuthTokenSet;
+import studio.startapps.pandemona.auth.request.CheckRefreshTokenRequest;
 
 import java.util.Map;
 
@@ -30,5 +34,10 @@ public class AuthenticationController {
         String username = body.getOrDefault("username", "");
         String refreshToken = body.getOrDefault("refreshToken", "");
         return this.authenticationService.renewAccessToken(username, refreshToken);
+    }
+
+    @PostMapping("/check/refresh")
+    public void checkRefreshToken(@RequestBody CheckRefreshTokenRequest request) throws TokenExpiredException {
+        this.authenticationService.checkRefreshTokenExpired(request);
     }
 }

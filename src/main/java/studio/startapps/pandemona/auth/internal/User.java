@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.user;
+package studio.startapps.pandemona.auth.internal;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
