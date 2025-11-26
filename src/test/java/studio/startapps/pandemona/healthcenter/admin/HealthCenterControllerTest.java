@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.*;
 
 @WebMvcTest(controllers = HealthCenterController.class)
 @Import(SecurityConfig.class)
-public class HealthCenterControllerTest {
+class HealthCenterControllerTest {
 
     @MockBean
     AuthenticationService authenticationService;

@@ -3,9 +3,13 @@ package studio.startapps.pandemona.stats;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.stats.internal.EndpointCounter;
+import studio.startapps.pandemona.stats.internal.EndpointCounterAggregate;
 import studio.startapps.pandemona.stats.internal.EndpointCounterRepository;
+import studio.startapps.pandemona.stats.internal.EndpointCounterUsage;
+import studio.startapps.pandemona.util.DateUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,13 +18,26 @@ public class EndpointCounterService {
 
     private final EndpointCounterRepository endpointCounterRepository;
 
+    EndpointCounterAggregate findSummary(LocalDate date) {
+        List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAllByDate(date);
+        return EndpointCounterAggregate.builder()
+                .period(date)
+                .usage(endpointCounterList.stream().map(EndpointCounterUsage::new).toList())
+                .build();
+    }
+
+    List<EndpointCounterAggregate> findSummary(LocalDate start, LocalDate end) {
+        List<LocalDate> dateRange = DateUtils.range(start, end);
+        return dateRange.parallelStream().map(this::findSummary).toList();
+    }
+
     void logRequest(String endpoint) {
         logRequest(LocalDate.now(), endpoint);
     }
 
     void logRequest(LocalDate requestDate, String endpoint) {
         // find by requestDate / endpoint
-        Optional<EndpointCounter> optionalEndpointCounter = this.endpointCounterRepository.findByEndpointAndDate(endpoint, requestDate);
+        Optional<EndpointCounter> optionalEndpointCounter = endpointCounterRepository.findByEndpointAndDate(endpoint, requestDate);
 
         optionalEndpointCounter.ifPresentOrElse(
             endpointCounter -> {

@@ -2,6 +2,7 @@ package studio.startapps.pandemona.configuration;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,15 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final AuthenticationFilter authenticationFilter;
-    private final UnauthorizedUserHandler unauthorizedUserHandler;
-
-    public SecurityConfig(AuthenticationFilter authenticationFilter) {
-        this.authenticationFilter = authenticationFilter;
-        this.unauthorizedUserHandler = new UnauthorizedUserHandler();
-    }
+    private final UnauthorizedUserHandler unauthorizedUserHandler = new UnauthorizedUserHandler();
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {

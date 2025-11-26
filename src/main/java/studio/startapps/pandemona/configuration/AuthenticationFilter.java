@@ -40,18 +40,21 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         String jwt = authorizationHeader.substring(BEARER_PREFIX.length());
         RequestToken token = this.authenticationService.toAccessToken(jwt);
 
-        if (token.subject() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // User has been identified, we need to check if the token has expired
-            if (this.authenticationService.hasAccessTokenExpired(token)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-            UserDetails userDetails = this.authenticationService.loadUserByUsername(token.subject());
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        if (token.subject() == null || SecurityContextHolder.getContext().getAuthentication() != null) {
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        // User has been identified, we need to check if the token has expired
+        if (this.authenticationService.hasAccessTokenExpired(token)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        UserDetails userDetails = this.authenticationService.loadUserByUsername(token.subject());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);
     }
 }
