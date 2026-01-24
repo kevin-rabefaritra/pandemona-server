@@ -63,7 +63,7 @@ class EndpointCounterIntegrationTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).isNotEmpty();
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestEndpoint()).isEqualTo("api/mobile/v1/on-duty-drugstores");
         assertThat(endpointCounter.getRequestCount()).isOne();
     }

@@ -65,7 +65,7 @@ class ClientReportMobileServiceIntegrationTest {
         totalCount = this.clientReportRepository.count();
         Assertions.assertEquals(1L, totalCount, "There should be 1 report");
 
-        ClientReport clientReport = this.clientReportRepository.findAll().get(0);
+        ClientReport clientReport = this.clientReportRepository.findAll().getFirst();
         Assertions.assertEquals("Drugstore A", clientReport.getTitle());
         Assertions.assertEquals("Drugstore location incorrect", clientReport.getComment());
         Assertions.assertNotNull(clientReport.getCreatedAt());

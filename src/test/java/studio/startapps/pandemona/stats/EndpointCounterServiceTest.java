@@ -47,7 +47,7 @@ class EndpointCounterServiceTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).hasSize(1);
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestDate()).isEqualTo(requestDate);
         assertThat(endpointCounter.getRequestCount()).isOne();
     }
@@ -71,7 +71,7 @@ class EndpointCounterServiceTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).hasSize(1);
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestDate()).isEqualTo(requestDate);
         assertThat(endpointCounter.getRequestCount()).isEqualTo(2L);
     }
