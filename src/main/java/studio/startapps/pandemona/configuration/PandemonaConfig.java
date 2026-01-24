@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@Import({SecurityConfig.class})
+@Import({SecurityConfig.class, WebConfig.class})
 @EnableJpaAuditing
 public class PandemonaConfig {
 
