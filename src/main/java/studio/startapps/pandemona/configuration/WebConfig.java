@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         log.info("[addCorsMappings] Adding client endpoint {}", this.clientOrigin);
 
-        List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**");
+        List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**", "/api/endpoints/*");
         protectedEndpoints.forEach((endpoint) -> {
             registry.addMapping(endpoint)
                     .allowedOrigins(this.clientOrigin)
@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         // GET
         List<String> openEndpoints = List.of("/api/v3/**", "/api/mobile/**");
-        openEndpoints.forEach((endpoint) -> {
+        openEndpoints.forEach(endpoint -> {
             registry.addMapping(endpoint)
                     .allowedOrigins("*")
                     .allowedMethods("GET", "OPTIONS");

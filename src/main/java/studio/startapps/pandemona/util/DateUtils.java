@@ -4,6 +4,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface DateUtils {
 
@@ -49,7 +51,17 @@ public interface DateUtils {
         return LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_DATE_TIME);
     }
 
-    static  LocalDate parseDate(String date) {
+    static LocalDate parseDate(String date) {
         return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+    }
+
+    static List<LocalDate> range(LocalDate fromInclusive, LocalDate toInclusive) {
+        List<LocalDate> result = new ArrayList<>();
+        while (fromInclusive.isBefore(toInclusive)) {
+            result.add(fromInclusive);
+            fromInclusive = fromInclusive.plusDays(1);
+        }
+        result.add(toInclusive);
+        return result;
     }
 }
