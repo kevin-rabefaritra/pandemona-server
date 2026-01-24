@@ -11,9 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
         configurer
-                .useRequestHeader("X-API-Version")
+                .useRequestHeader("X-Api-Version")
                 .useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")  // Media type
-                .addSupportedVersions("1.0","2.0")
+                .addSupportedVersions("1.0", "2.0")
                 .setDefaultVersion("1.0");
     }
 }

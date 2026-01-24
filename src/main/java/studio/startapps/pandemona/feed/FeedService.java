@@ -1,90 +1,28 @@
 package studio.startapps.pandemona.feed;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import studio.startapps.pandemona.feed.internal.FeedPage;
-import studio.startapps.pandemona.feed.internal.PostPreview;
-import studio.startapps.pandemona.util.DateUtils;
+import studio.startapps.pandemona.feed.internal.Post;
+import studio.startapps.pandemona.feed.internal.PostRepository;
 import studio.startapps.pandemona.util.LangUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class FeedService {
 
+    private final PostRepository postRepository;
+
     private final FeedProperties feedProperties;
-    private final RestTemplate restTemplate;
 
-    FeedPage findAll(String language, Pageable pageable) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(HttpHeaders.ACCEPT_LANGUAGE, language);
-        httpHeaders.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-
-        HttpEntity<String> entity = new HttpEntity<>(null, httpHeaders);
-
-        List<PostPreview> content = new ArrayList<>();
-        boolean last = true;
-
-        try {
-            String url = UriComponentsBuilder.fromPath(this.feedProperties.getEndpoint())
-                    .queryParam("channel", this.feedProperties.getChannel())
-                    .queryParam("page", pageable.getPageNumber())
-                    .encode()
-                    .toUriString();
-
-            ResponseEntity<JsonNode> response = this.restTemplate.exchange(url, HttpMethod.GET, entity, JsonNode.class);
-
-            if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
-                throw new RestClientException("Failed with status code %s".formatted(response.getStatusCode()));
-            }
-
-            JsonNode responseContent = response.getBody();
-            responseContent.get("content").elements().forEachRemaining((jsonNode -> {
-                content.add(this.toPostPreview(language, jsonNode));
-            }));
-            last = responseContent.get("last").asBoolean();
-        }
-        catch (RestClientException e) {
-            log.error("[FeedService.findAll] Failed to fetch feed. Error {}", e.getMessage());
-        }
-
-        return new FeedPage(content, last);
+    public Page<Post> findAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
-    private PostPreview toPostPreview(String language, JsonNode jsonNode) {
-        JsonNode postNode = jsonNode.get("post");
-
-        // Get first supported lang
-        String langCode = LangUtils.getFirstSupportedLangs(language, this.feedProperties.supportedLangsList());
-
-        String reference = postNode.get("reference").asText();
-        String postDetailsUrl = String.format(this.feedProperties.getPostDetailsUrl(), langCode, reference);
-
-        final List<String> postTags = new ArrayList<>();
-        final List<String> mediaUris = new ArrayList<>();
-
-        postNode.get("tags").forEach((tag) -> postTags.add(tag.asText()));
-        postNode.get("mediaUris").forEach((tag) -> mediaUris.add(tag.asText()));
-
-        return new PostPreview(
-            reference,
-            postNode.get("authorName").asText(),
-            postNode.get("authorProfilePicture").asText(),
-            DateUtils.parseDateTimeISO(postNode.get("publishedOn").asText()),
-            postNode.get("summary").asText(),
-            postTags,
-            mediaUris,
-            postDetailsUrl
-        );
+    public String getRequestedLanguage(String acceptLanguage) {
+        return LangUtils.getFirstSupportedLangs(acceptLanguage, feedProperties.supportedLangsList());
     }
 }
