@@ -1,31 +1,20 @@
 package studio.startapps.pandemona.report.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = ClientReportMobileController.class)
-@Import(SecurityConfig.class)
-class ClientReportMobileControllerTest {
+@ControllerTest(ClientReportMobileController.class)
+class ClientReportMobileControllerTest extends AbstractControllerTest {
 
-    @MockBean
+    @MockitoBean
     ClientReportMobileService reportService;
-
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @Autowired
-    MockMvc mockMvc;
 
     @Test
     void reportContentShouldBeCreated() throws Exception {

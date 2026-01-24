@@ -1,34 +1,25 @@
 package studio.startapps.pandemona.ondutydrugstores.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = OnDutyDrugstoresMobileController.class)
-@Import(SecurityConfig.class)
-public class OnDutyDrugstoresMobileControllerTest {
+@ControllerTest(OnDutyDrugstoresMobileController.class)
+class OnDutyDrugstoresMobileControllerTest extends AbstractControllerTest {
 
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @MockBean
+    @MockitoBean
     OnDutyDrugstoresMobileService onDutyDrugstoresMobileService;
-
-    @Autowired
-    MockMvc mockMvc;
 
     @Test
     void fetchOnDutyDrugstoresShouldBeOk() throws Exception {

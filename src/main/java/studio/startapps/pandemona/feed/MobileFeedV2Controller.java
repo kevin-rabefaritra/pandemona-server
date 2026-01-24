@@ -7,21 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import studio.startapps.pandemona.feed.internal.FeedPage;
-
-import java.util.List;
+import studio.startapps.pandemona.feed.internal.PostPreview;
+import studio.startapps.pandemona.util.DataPage;
 
 @RestController
-@RequestMapping("/api/mobile/v1/feed")
+@RequestMapping("/api/mobile/v2/feed")
 @RequiredArgsConstructor
-public class MobileFeedController {
+public class MobileFeedV2Controller {
+
+    private final FeedService feedService;
 
     @GetMapping
-    @Deprecated(since = "v2")
-    FeedPage findAll(@RequestHeader(name = HttpHeaders.ACCEPT_LANGUAGE) String language, Pageable pageable) {
-        return FeedPage.builder()
-                .data(List.of())
-                .last(true)
-                .build();
+    DataPage<PostPreview> findAll(@RequestHeader(name = HttpHeaders.ACCEPT_LANGUAGE) String language, Pageable pageable) {
+        // Todo: implement
+        return null;
     }
 }
