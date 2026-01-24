@@ -3,9 +3,9 @@ package studio.startapps.pandemona.stats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.jdbc.JdbcTestUtils;
+import studio.startapps.pandemona.core.IntegrationTest;
 import studio.startapps.pandemona.stats.internal.EndpointCounter;
 import studio.startapps.pandemona.stats.internal.EndpointCounterRepository;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@IntegrationTest
 class EndpointCounterServiceTest {
 
     @Autowired

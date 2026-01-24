@@ -1,23 +1,21 @@
 package studio.startapps.pandemona.drugstore.mobile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.jdbc.JdbcTestUtils;
+import studio.startapps.pandemona.core.IntegrationTest;
 import studio.startapps.pandemona.util.DateUtils;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Slf4j
+@IntegrationTest
 public class LegacyDrugstoreMobileIntegrationTest {
 
     @Autowired
@@ -26,8 +24,7 @@ public class LegacyDrugstoreMobileIntegrationTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    ObjectMapper objectMapper;
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @AfterEach
     void destroy() {

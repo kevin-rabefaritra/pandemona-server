@@ -36,7 +36,7 @@ public class FeedService {
         boolean last = true;
 
         try {
-            String url = UriComponentsBuilder.fromHttpUrl(this.feedProperties.getEndpoint())
+            String url = UriComponentsBuilder.fromPath(this.feedProperties.getEndpoint())
                     .queryParam("channel", this.feedProperties.getChannel())
                     .queryParam("page", pageable.getPageNumber())
                     .encode()

@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ControllerTest(DrugstoreMobileController.class)
+@ControllerTest(controllers = DrugstoreMobileController.class)
 class DrugstoreMobileControllerTest extends AbstractControllerTest {
 
     @MockitoBean
