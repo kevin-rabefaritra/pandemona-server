@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.feed;
+package studio.startapps.pandemona.feed.internal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

@@ -5,10 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import studio.startapps.pandemona.util.LangUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Builder
 @Slf4j
@@ -16,14 +16,13 @@ public record PostPreview(
     Long id,
     String authorName,
     String authorPicture,
-    String content,
+    Map<String, String> content,
     List<String> mediaList,
     LocalDateTime publishedOn
 ) {
 
-    public static PostPreview build(Post post, String language) {
+    public static PostPreview build(Post post) {
         ObjectMapper objectMapper = new ObjectMapper();
-        String content = LangUtils.getContentForLang(post.getContent(), language);
 
         // media list
         List<String> mediaList = List.of();
@@ -39,7 +38,8 @@ public record PostPreview(
                 .id(post.getId())
                 .authorName(post.getAuthorName())
                 .authorPicture(post.getAuthorPicture())
-                .content(content)
+                .content(objectMapper.convertValue(post.getContent(), new TypeReference<>() {
+                }))
                 .mediaList(mediaList)
                 .publishedOn(post.getPublishedOn())
                 .build();

@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.feed;
+package studio.startapps.pandemona.feed.mobile;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +9,8 @@ import studio.startapps.pandemona.core.ControllerTest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ControllerTest(MobileFeedControllerV1.class)
-class FeedControllerV1Test extends AbstractControllerTest {
+@ControllerTest(FeedMobileControllerV1.class)
+class FeedMobileControllerV1Test extends AbstractControllerTest {
 
     @DisplayName("Fetch feed v1 should be ok")
     @Test

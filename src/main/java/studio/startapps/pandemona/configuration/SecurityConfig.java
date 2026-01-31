@@ -60,7 +60,7 @@ public class SecurityConfig {
         log.info("[SecurityConfig] Registering CORS for {}", clientOrigin);
 
         // 1. Protected endpoints (admin)
-        List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**", "/api/endpoints/*");
+        List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**", "/api/endpoints/*", "/api/feed/**");
         protectedEndpoints.forEach(endpoint -> {
             CorsConfiguration configuration = buildCorsConfiguration(clientOrigin, List.of("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
             source.registerCorsConfiguration(endpoint, configuration);
