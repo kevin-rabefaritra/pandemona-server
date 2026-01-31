@@ -9,7 +9,7 @@ import studio.startapps.pandemona.stats.internal.TrackEndpointUsage;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/mobile/v1/drugstores", version = "1.0")
+@RequestMapping(value = "/api/mobile/drugstores", version = "2.0")
 @RequiredArgsConstructor
 public class DrugstoreMobileController {
 

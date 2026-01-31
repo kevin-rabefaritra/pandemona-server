@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ControllerTest(NumberMobileController.class)
-class NumberMobileControllerTest extends AbstractControllerTest {
+@ControllerTest(NumberMobileV1Controller.class)
+class NumberMobileControllerV1Test extends AbstractControllerTest {
 
     @MockitoBean
     NumberMobileService numberMobileService;

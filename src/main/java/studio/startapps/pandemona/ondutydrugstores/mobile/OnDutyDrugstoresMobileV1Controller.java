@@ -11,9 +11,10 @@ import studio.startapps.pandemona.stats.internal.TrackEndpointUsage;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/mobile/on-duty-drugstores", version = "2.0")
+@RequestMapping(value = "api/mobile/v1/on-duty-drugstores")
 @RequiredArgsConstructor
-public class OnDutyDrugstoresMobileController {
+@Deprecated
+public class OnDutyDrugstoresMobileV1Controller {
 
     private final OnDutyDrugstoresMobileService onDutyDrugstoresMobileService;
 

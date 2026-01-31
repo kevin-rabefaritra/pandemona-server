@@ -11,9 +11,10 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/mobile/v1/feed")
 @RequiredArgsConstructor
+@Deprecated
 public class FeedMobileControllerV1 {
 
-    @GetMapping(version = "1.0")
+    @GetMapping
     @Deprecated(since = "v2.0")
     Map<String, Object> findAll() {
         return Map.of("data", List.of(), "last", true);

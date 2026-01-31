@@ -15,8 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ControllerTest(OnDutyDrugstoresMobileController.class)
-class OnDutyDrugstoresMobileControllerTest extends AbstractControllerTest {
+@ControllerTest(OnDutyDrugstoresMobileV1Controller.class)
+class OnDutyDrugstoresMobileV1ControllerTest extends AbstractControllerTest {
 
     @MockitoBean
     OnDutyDrugstoresMobileService onDutyDrugstoresMobileService;

@@ -31,10 +31,10 @@ class EndpointCounterControllerTest extends AbstractControllerTest {
         given(endpointCounterService.findSummary(startDate, endDate)).willReturn(
             List.of(
                 EndpointCounterAggregate.builder().period(LocalDate.of(2025, 1, 1)).usage(
-                    List.of(new EndpointCounterUsage("/api/some-endpoint", 10L), new EndpointCounterUsage("/api/another-endpoint", 20L))
+                    List.of(new EndpointCounterUsage("/api/some-endpoint", "2.0", 10L), new EndpointCounterUsage("/api/another-endpoint", "2.0", 20L))
                 ).build(),
                 EndpointCounterAggregate.builder().period(LocalDate.of(2025, 1, 15)).usage(
-                        List.of(new EndpointCounterUsage("/api/some-endpoint", 0L), new EndpointCounterUsage("/api/another-endpoint", 10L))
+                        List.of(new EndpointCounterUsage("/api/some-endpoint", "2.0", 0L), new EndpointCounterUsage("/api/another-endpoint", "2.0", 10L))
                 ).build()
             )
         );

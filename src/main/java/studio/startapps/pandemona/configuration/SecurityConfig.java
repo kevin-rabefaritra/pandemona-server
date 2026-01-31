@@ -62,28 +62,28 @@ public class SecurityConfig {
         // 1. Protected endpoints (admin)
         List<String> protectedEndpoints = List.of("/api/auth/**", "/api/drugstores/**", "/api/onduty-drugstores/**", "/api/cities", "/api/health-centers/**", "/api/numbers/**", "/api/endpoints/*", "/api/feed/**");
         protectedEndpoints.forEach(endpoint -> {
-            CorsConfiguration configuration = buildCorsConfiguration(clientOrigin, List.of("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
+            CorsConfiguration configuration = buildCorsConfiguration(clientOrigin, List.of("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"), true);
             source.registerCorsConfiguration(endpoint, configuration);
         });
 
         // 2. Mobile endpoints
-        CorsConfiguration mobileConfiguration = buildCorsConfiguration("*", List.of("POST"));
+        CorsConfiguration mobileConfiguration = buildCorsConfiguration("*", List.of("POST"), false);
         source.registerCorsConfiguration("/api/mobile/*/report", mobileConfiguration);
 
         List<String> openEndpoints = List.of("/api/v3/**", "/api/mobile/**");
         openEndpoints.forEach(endpoint -> {
-            CorsConfiguration configuration = buildCorsConfiguration("*", List.of("GET", "OPTIONS"));
+            CorsConfiguration configuration = buildCorsConfiguration("*", List.of("GET", "OPTIONS"), false);
             source.registerCorsConfiguration(endpoint, configuration);
         });
 
         return source;
     }
 
-    private CorsConfiguration buildCorsConfiguration(String allowedOrigin, List<String> allowedMethods) {
+    private CorsConfiguration buildCorsConfiguration(String allowedOrigin, List<String> allowedMethods, boolean allowCredentials) {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(allowedOrigin));
         configuration.setAllowedMethods(allowedMethods);
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(allowCredentials);
         configuration.setAllowedHeaders(List.of("*"));
         return configuration;
     }

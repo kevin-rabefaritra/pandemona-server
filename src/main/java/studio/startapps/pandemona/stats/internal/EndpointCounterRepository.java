@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface EndpointCounterRepository extends JpaRepository<EndpointCounter, Long> {
 
-    @Query("SELECT ec FROM EndpointCounter ec WHERE ec.requestEndpoint = :endpoint AND ec.requestDate = :date")
-    Optional<EndpointCounter> findByEndpointAndDate(@Param("endpoint") String endpoint, @Param("date") LocalDate date);
+    @Query("SELECT ec FROM EndpointCounter ec WHERE ec.requestEndpoint = :endpoint AND ec.requestDate = :date AND ec.version = :version LIMIT 1")
+    Optional<EndpointCounter> findByEndpointDateAndVersion(@Param("endpoint") String endpoint, @Param("date") LocalDate date, @Param("version") String version);
 
     @Query("SELECT ec FROM EndpointCounter ec WHERE ec.requestDate = :date")
     List<EndpointCounter> findAllByDate(@Param("date") LocalDate date);

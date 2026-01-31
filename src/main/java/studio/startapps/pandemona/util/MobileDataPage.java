@@ -7,7 +7,7 @@ import java.util.List;
 
 @Builder
 public record MobileDataPage<T extends Object>(
-    List<T> content,
+    List<T> data,
     boolean last
 ) {
     public MobileDataPage(Page<T> page) {
