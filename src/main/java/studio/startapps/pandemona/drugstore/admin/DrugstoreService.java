@@ -10,6 +10,7 @@ import studio.startapps.pandemona.drugstore.internal.DrugstoreFeature;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreRepository;
 import studio.startapps.pandemona.drugstore.internal.DrugstoreSpecification;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,16 @@ public class DrugstoreService {
 
     List<DrugstorePreview> findByKeyword(String keyword) {
         Pageable pageable = Pageable.ofSize(10);
-        return this.drugstoreRepository.findByKeyword(keyword, pageable).map(DrugstorePreview::new).toList();
+
+        // 1. first find exact matches
+        List<Drugstore> result = new ArrayList<>(drugstoreRepository.findByName(keyword, pageable).stream().toList());
+
+        // 2. if no exact matches, add all matches
+        if (result.isEmpty()) {
+            result.addAll(drugstoreRepository.findByKeyword(keyword ,pageable).stream().toList());
+        }
+
+        return result.stream().map(DrugstorePreview::new).toList();
     }
 
     List<String> getFeatures() {

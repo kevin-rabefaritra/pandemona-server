@@ -1,40 +1,29 @@
 package studio.startapps.pandemona.drugstore.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.configuration.SecurityConfig;
-import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.drugstore.admin.DrugstoreService;
-import studio.startapps.pandemona.ondutydrugstores.admin.OnDutyDrugstoresService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = LegacyDrugstoreMobileController.class)
-@Import(SecurityConfig.class)
-@ActiveProfiles({"test"})
-class LegacyDrugstoreMobileControllerTest {
+@ControllerTest(LegacyDrugstoreMobileController.class)
+class LegacyDrugstoreMobileControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
+    @MockitoBean
     DrugstoreService drugstoreService;
 
-    @MockBean
+    @MockitoBean
     LegacyDrugstoreMobileService drugstoreMobileService;
 
-    @MockBean
-    AuthenticationService authenticationService;
 
     @Test
     void testEndpointIsOk() throws Exception {

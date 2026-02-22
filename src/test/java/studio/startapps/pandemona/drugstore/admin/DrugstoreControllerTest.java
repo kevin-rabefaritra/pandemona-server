@@ -1,41 +1,28 @@
 package studio.startapps.pandemona.drugstore.admin;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.configuration.SecurityConfig;
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.drugstore.internal.DrugstoreFeature;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = DrugstoreController.class)
-@Import(SecurityConfig.class)
-@ActiveProfiles({"test"})
-class DrugstoreControllerTest {
+@ControllerTest(DrugstoreController.class)
+class DrugstoreControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
+    @MockitoBean
     DrugstoreService drugstoreService;
-
-    @MockBean
-    AuthenticationService authenticationService;
 
     @WithMockUser
     @Test

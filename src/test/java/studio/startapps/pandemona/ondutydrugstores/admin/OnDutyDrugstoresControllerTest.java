@@ -1,47 +1,36 @@
 package studio.startapps.pandemona.ondutydrugstores.admin;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.configuration.SecurityConfig;
-import studio.startapps.pandemona.auth.AuthenticationService;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.drugstore.admin.DrugstorePreview;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstores;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresDetails;
-import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresItemPreview;
 import studio.startapps.pandemona.ondutydrugstores.internal.OnDutyDrugstoresPreview;
 import studio.startapps.pandemona.util.DataPage;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = OnDutyDrugstoreController.class)
-@Import(SecurityConfig.class)
+@ControllerTest(OnDutyDrugstoreController.class)
 @ActiveProfiles({"test"})
-class OnDutyDrugstoresControllerTest {
+class OnDutyDrugstoresControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
+    @MockitoBean
     OnDutyDrugstoresService onDutyDrugstoresService;
-
-    @MockBean
-    AuthenticationService authenticationService;
 
     @WithMockUser
     @Test

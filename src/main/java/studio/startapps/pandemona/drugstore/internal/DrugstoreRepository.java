@@ -22,6 +22,9 @@ public interface DrugstoreRepository extends ListPagingAndSortingRepository<Drug
     @Query(value = "SELECT * FROM drugstore WHERE deleted = true", nativeQuery = true)
     List<Drugstore> findAllDeleted();
 
+    @Query("SELECT d FROM Drugstore d WHERE Lower(name) = Lower(?1)")
+    Page<Drugstore> findByName(String name, Pageable pageable);
+
     @Query("SELECT d FROM Drugstore d WHERE Lower(name) LIKE Concat('%', Lower(?1), '%')")
     Page<Drugstore> findByKeyword(String keyword, Pageable pageable);
 }

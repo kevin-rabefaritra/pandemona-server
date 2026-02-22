@@ -4,24 +4,22 @@
 - PostgreSQL 16
 - Thymeleaf
 
-## Directory structure
+## Deployment
+
+- Update JAR version
+- Update JAR version in `production/server/Dockerfile`
+- Delete previous version
+
+```shell
+docker-compose build --no-cache pandemona-server
 ```
-.
-+-- src
-|   +-- main
-|       +-- java/studio/startapps/pandemona
-|           +-- config
-|           +-- controller
-|           +-- repository
-|           +-- service
-|           +-- util
-|           +-- PandemonaApplication.java
-|       +-- resources
-|           +-- application.properties
-|           +-- schema.sql
-|           +-- ...
-|
-|   +-- test/java/studio/startapps/pandemona
-|       +-- service
-|       +-- web
+
+If all:
+```shell
+docker-compose up -d --force-recreate pandemona-client
+```
+
+If server only:
+```shell
+docker-compose up -d --force-recreate pandemona-server
 ```

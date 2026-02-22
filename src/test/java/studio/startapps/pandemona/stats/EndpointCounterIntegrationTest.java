@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +11,7 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import studio.startapps.pandemona.auth.AuthenticationService;
 import studio.startapps.pandemona.auth.internal.AuthTokenSet;
+import studio.startapps.pandemona.core.IntegrationTest;
 import studio.startapps.pandemona.stats.internal.EndpointCounter;
 import studio.startapps.pandemona.stats.internal.EndpointCounterAggregate;
 import studio.startapps.pandemona.stats.internal.EndpointCounterRepository;
@@ -26,8 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+@IntegrationTest
 class EndpointCounterIntegrationTest {
 
     @Autowired
@@ -63,7 +61,7 @@ class EndpointCounterIntegrationTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).isNotEmpty();
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestEndpoint()).isEqualTo("api/mobile/v1/on-duty-drugstores");
         assertThat(endpointCounter.getRequestCount()).isOne();
     }
