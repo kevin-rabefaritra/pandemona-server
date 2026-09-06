@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 import studio.startapps.pandemona.version.internal.AppVersion;
 
 @RestController
-@RequestMapping(value = "/api/mobile/version", version = "2.0")
+@RequestMapping("/api/mobile/v1/version")
 @RequiredArgsConstructor
-public class VersionMobileController {
+@Deprecated
+public class VersionMobileControllerV1 {
 
     private final VersionMobileService versionMobileService;
 
