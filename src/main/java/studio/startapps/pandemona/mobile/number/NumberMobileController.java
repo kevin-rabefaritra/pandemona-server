@@ -1,0 +1,23 @@
+package studio.startapps.pandemona.mobile.number;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import studio.startapps.pandemona.admin.stats.internal.TrackEndpointUsage;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/mobile/numbers", version = "2.0")
+@RequiredArgsConstructor
+public class NumberMobileController {
+
+    private final NumberMobileService numberMobileService;
+
+    @GetMapping
+    @TrackEndpointUsage
+    List<EmergencyNumberItem> findAll() {
+        return this.numberMobileService.findAll();
+    }
+}

@@ -1,0 +1,54 @@
+package studio.startapps.pandemona.admin.healthcenter;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import studio.startapps.pandemona.admin.business.exception.BusinessNotFoundException;
+import studio.startapps.pandemona.admin.healthcenter.internal.HealthCenterRequest;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/health-centers")
+@RequiredArgsConstructor
+public class HealthCenterController {
+
+    private static final int ITEMS_PER_PAGE = 20;
+    private static final String DEFAULT_SORT = "name";
+
+    private final HealthCenterService healthCenterService;
+
+    @GetMapping
+    Page<HealthCenterPreview> findAll(@PageableDefault(size = ITEMS_PER_PAGE, sort = DEFAULT_SORT) Pageable pageable) {
+        return this.healthCenterService.findAll(pageable);
+    }
+
+    @GetMapping("/types")
+    List<String> getTypes() {
+        return this.healthCenterService.getTypes();
+    }
+
+    @GetMapping("/{id}")
+    HealthCenterDetails findById(@PathVariable long id) throws BusinessNotFoundException {
+        return this.healthCenterService.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    void save(@RequestBody HealthCenterRequest request) {
+        this.healthCenterService.save(request);
+    }
+
+    @PutMapping("/{id}")
+    void update(@PathVariable long id, @RequestBody HealthCenterRequest request) throws BusinessNotFoundException {
+        this.healthCenterService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable long id) throws BusinessNotFoundException {
+        this.healthCenterService.delete(id);
+    }
+}

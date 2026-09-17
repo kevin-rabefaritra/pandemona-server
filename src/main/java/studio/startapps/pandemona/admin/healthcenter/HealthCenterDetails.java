@@ -1,0 +1,30 @@
+package studio.startapps.pandemona.admin.healthcenter;
+
+import studio.startapps.pandemona.admin.city.internal.CityEnum;
+import studio.startapps.pandemona.admin.healthcenter.internal.HealthCenter;
+import studio.startapps.pandemona.admin.healthcenter.internal.HealthCenterType;
+
+import java.util.List;
+
+public record HealthCenterDetails(
+    String name,
+    String address,
+    HealthCenterType type,
+    CityEnum city,
+    Float latitude,
+    Float longitude,
+    List<String> contacts
+) {
+
+    public HealthCenterDetails(HealthCenter healthCenter) {
+        this(
+            healthCenter.getName(),
+            healthCenter.getAddress(),
+            healthCenter.getType(),
+            healthCenter.getCity(),
+            healthCenter.getLatitude(),
+            healthCenter.getLongitude(),
+            healthCenter.getContacts()
+        );
+    }
+}
