@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import studio.startapps.pandemona.core.AbstractControllerTest;
 import studio.startapps.pandemona.core.ControllerTest;
+import studio.startapps.pandemona.mobile.feed.FeedMobileControllerV1;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

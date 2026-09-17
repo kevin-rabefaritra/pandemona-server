@@ -8,8 +8,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import studio.startapps.pandemona.core.AbstractControllerTest;
 import studio.startapps.pandemona.core.ControllerTest;
-import studio.startapps.pandemona.feed.internal.FeedService;
-import studio.startapps.pandemona.feed.internal.Post;
+import studio.startapps.pandemona.admin.feed.internal.FeedService;
+import studio.startapps.pandemona.admin.feed.internal.Post;
+import studio.startapps.pandemona.mobile.feed.FeedMobileController;
 
 import java.time.LocalDateTime;
 import java.util.List;

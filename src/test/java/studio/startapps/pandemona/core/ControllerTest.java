@@ -4,7 +4,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.test.context.ActiveProfiles;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.security.SecurityConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
