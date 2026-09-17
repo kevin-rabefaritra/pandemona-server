@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>studio.startapps</groupId>
 	<artifactId>pandemona</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<name>Pharmada</name>
 	<description>Pharmada server</description>
 	<properties>
