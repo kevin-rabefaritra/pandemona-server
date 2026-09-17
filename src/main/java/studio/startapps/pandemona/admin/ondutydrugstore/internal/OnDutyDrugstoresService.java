@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.admin.ondutydrugstore;
+package studio.startapps.pandemona.admin.ondutydrugstore.internal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -7,8 +7,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import studio.startapps.pandemona.admin.drugstore.internal.Drugstore;
 import studio.startapps.pandemona.admin.drugstore.internal.DrugstoreRepository;
-import studio.startapps.pandemona.admin.ondutydrugstore.internal.*;
 import studio.startapps.pandemona.admin.ondutydrugstore.exception.OnDutyDrugstoresNotFoundException;
+import studio.startapps.pandemona.admin.ondutydrugstore.request.OnDutyDrugstoresRequest;
 import studio.startapps.pandemona.util.DataPage;
 import studio.startapps.pandemona.util.DateUtils;
 
@@ -34,7 +34,7 @@ public class OnDutyDrugstoresService {
         return this.onDutyDrugstoresRepository.findAll(specification).stream().map(OnDutyDrugstoresPreview::new).toList();
     }
 
-    void save(OnDutyDrugstoresRequest request) {
+    public void save(OnDutyDrugstoresRequest request) {
         Set<Drugstore> drugstores = this.drugstoreRepository.findByIdIn(request.drugstores());
 
         OnDutyDrugstores onDutyDrugstores = OnDutyDrugstores.builder()
@@ -46,7 +46,7 @@ public class OnDutyDrugstoresService {
         this.onDutyDrugstoresRepository.save(onDutyDrugstores);
     }
 
-    void update(long id, OnDutyDrugstoresRequest request) throws OnDutyDrugstoresNotFoundException {
+    public void update(long id, OnDutyDrugstoresRequest request) throws OnDutyDrugstoresNotFoundException {
         OnDutyDrugstores onDutyDrugstores = this.onDutyDrugstoresRepository.findById(id)
                 .orElseThrow(() -> new OnDutyDrugstoresNotFoundException(id));
 
