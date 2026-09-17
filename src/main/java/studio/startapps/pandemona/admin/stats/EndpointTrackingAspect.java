@@ -18,7 +18,7 @@ public class EndpointTrackingAspect {
 
     private final EndpointCounterService endpointCounterService;
 
-    @After("@annotation(studio.startapps.pandemona.stats.internal.TrackEndpointUsage)")
+    @After("@annotation(studio.startapps.pandemona.admin.stats.internal.TrackEndpointUsage)")
     public void afterTrackedEndpoint(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

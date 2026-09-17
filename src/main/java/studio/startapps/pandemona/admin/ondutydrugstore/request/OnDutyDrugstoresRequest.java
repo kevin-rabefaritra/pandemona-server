@@ -1,4 +1,4 @@
-package studio.startapps.pandemona.admin.ondutydrugstore;
+package studio.startapps.pandemona.admin.ondutydrugstore.request;
 
 import java.time.LocalDate;
 import java.util.List;
