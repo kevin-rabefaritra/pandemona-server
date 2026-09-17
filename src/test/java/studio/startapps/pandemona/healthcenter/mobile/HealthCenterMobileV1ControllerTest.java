@@ -1,36 +1,25 @@
 package studio.startapps.pandemona.healthcenter.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.healthcenter.internal.HealthCenterType;
 
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.mockito.BDDMockito.*;
+@ControllerTest(HealthCenterMobileV1Controller.class)
+class HealthCenterMobileV1ControllerTest extends AbstractControllerTest {
 
-@WebMvcTest(controllers = HealthCenterMobileController.class)
-@Import(SecurityConfig.class)
-public class HealthCenterMobileControllerTest {
 
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @MockBean
+    @MockitoBean
     HealthCenterMobileService healthCenterMobileService;
-
-    @Autowired
-    MockMvc mockMvc;
 
     @Test
     void fetchHealthCentersShouldBeOk() throws Exception {

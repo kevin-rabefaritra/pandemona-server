@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "/api/drugstores")
+@RequestMapping("/api/drugstores")
 public class DrugstoreController {
 
     private final DrugstoreService drugstoreService;

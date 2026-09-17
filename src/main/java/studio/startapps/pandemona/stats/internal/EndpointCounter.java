@@ -26,4 +26,6 @@ public class EndpointCounter {
     private Long requestCount;
 
     private String requestEndpoint;
+
+    private String version;
 }

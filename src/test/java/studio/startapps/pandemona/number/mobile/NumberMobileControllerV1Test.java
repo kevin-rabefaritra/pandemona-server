@@ -1,34 +1,24 @@
 package studio.startapps.pandemona.number.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import studio.startapps.pandemona.city.internal.CityEnum;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.number.internal.EmergencyNumberType;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = NumberMobileController.class)
-@Import(SecurityConfig.class)
-public class NumberMobileControllerTest {
+@ControllerTest(NumberMobileV1Controller.class)
+class NumberMobileControllerV1Test extends AbstractControllerTest {
 
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @MockBean
+    @MockitoBean
     NumberMobileService numberMobileService;
-
-    @Autowired
-    MockMvc mockMvc;
 
     @Test
     void fetchNumbersShouldBeOk() throws Exception {

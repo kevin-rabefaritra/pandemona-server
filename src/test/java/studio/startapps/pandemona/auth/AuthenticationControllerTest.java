@@ -1,34 +1,20 @@
 package studio.startapps.pandemona.auth;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.request.CheckRefreshTokenRequest;
-import studio.startapps.pandemona.configuration.SecurityConfig;
-import studio.startapps.pandemona.auth.internal.TokenExpiredException;
 import studio.startapps.pandemona.auth.internal.AuthTokenSet;
-import studio.startapps.pandemona.util.RequestToken;
+import studio.startapps.pandemona.auth.internal.TokenExpiredException;
+import studio.startapps.pandemona.auth.request.CheckRefreshTokenRequest;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = AuthenticationController.class)
-@Import(SecurityConfig.class)
-@ActiveProfiles("test")
-class AuthenticationControllerTest {
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
-    AuthenticationService authenticationService;
+@ControllerTest(AuthenticationController.class)
+class AuthenticationControllerTest extends AbstractControllerTest {
 
     @Test
     void loginIsOk() throws Exception {

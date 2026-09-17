@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import studio.startapps.pandemona.stats.internal.TrackEndpointUsage;
 
 @RestController
-@RequestMapping("api/mobile/v1/report")
+@RequestMapping(value = "api/mobile/v1/report")
 @RequiredArgsConstructor
 public class ClientReportMobileController {
 

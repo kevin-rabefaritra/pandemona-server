@@ -1,31 +1,22 @@
 package studio.startapps.pandemona.version.mobile;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.version.internal.AppVersion;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = VersionMobileController.class)
-@Import(SecurityConfig.class)
-class VersionMobileControllerTest {
+@ControllerTest(VersionMobileController.class)
+class VersionMobileControllerTest extends AbstractControllerTest {
 
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @MockBean
+    @MockitoBean
     VersionMobileService versionMobileService;
-
-    @Autowired
-    MockMvc mockMvc;
 
     @Test
     void checkVersionShouldBeOk() throws Exception {

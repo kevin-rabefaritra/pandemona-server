@@ -1,14 +1,10 @@
 package studio.startapps.pandemona.stats;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import studio.startapps.pandemona.auth.AuthenticationService;
-import studio.startapps.pandemona.configuration.SecurityConfig;
+import studio.startapps.pandemona.core.AbstractControllerTest;
+import studio.startapps.pandemona.core.ControllerTest;
 import studio.startapps.pandemona.stats.internal.EndpointCounterAggregate;
 import studio.startapps.pandemona.stats.internal.EndpointCounterUsage;
 
@@ -21,17 +17,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = EndpointController.class)
-@Import(SecurityConfig.class)
-class EndpointCounterControllerTest {
+@ControllerTest(EndpointController.class)
+class EndpointCounterControllerTest extends AbstractControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @MockBean
-    AuthenticationService authenticationService;
-
-    @MockBean
+    @MockitoBean
     EndpointCounterService endpointCounterService;
 
     @Test
@@ -42,10 +31,10 @@ class EndpointCounterControllerTest {
         given(endpointCounterService.findSummary(startDate, endDate)).willReturn(
             List.of(
                 EndpointCounterAggregate.builder().period(LocalDate.of(2025, 1, 1)).usage(
-                    List.of(new EndpointCounterUsage("/api/some-endpoint", 10L), new EndpointCounterUsage("/api/another-endpoint", 20L))
+                    List.of(new EndpointCounterUsage("/api/some-endpoint", "2.0", 10L), new EndpointCounterUsage("/api/another-endpoint", "2.0", 20L))
                 ).build(),
                 EndpointCounterAggregate.builder().period(LocalDate.of(2025, 1, 15)).usage(
-                        List.of(new EndpointCounterUsage("/api/some-endpoint", 0L), new EndpointCounterUsage("/api/another-endpoint", 10L))
+                        List.of(new EndpointCounterUsage("/api/some-endpoint", "2.0", 0L), new EndpointCounterUsage("/api/another-endpoint", "2.0", 10L))
                 ).build()
             )
         );

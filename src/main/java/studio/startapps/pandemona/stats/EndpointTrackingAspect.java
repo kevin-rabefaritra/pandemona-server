@@ -5,7 +5,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.reflect.Method;
 
@@ -21,8 +23,10 @@ public class EndpointTrackingAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         String fullPath = extractFullPath(method);
+        String version = extractVersion(method);
+
         if (!fullPath.isBlank()) {
-            endpointCounterService.logRequest(fullPath);
+            endpointCounterService.logRequest(fullPath, version);
         }
     }
 
@@ -41,6 +45,16 @@ public class EndpointTrackingAspect {
         if (methodPath == null) methodPath = "";
 
         return basePath + methodPath;
+    }
+
+    private String extractVersion(Method method) {
+        Class<?> controllerClass = method.getDeclaringClass();
+        RequestMapping requestMapping = AnnotatedElementUtils.findMergedAnnotation(controllerClass, RequestMapping.class);
+
+        if (requestMapping != null && !requestMapping.version().isBlank()) {
+            return requestMapping.version();
+        }
+        return "unknown";
     }
 
     private String extractMethodPath(Method method) {

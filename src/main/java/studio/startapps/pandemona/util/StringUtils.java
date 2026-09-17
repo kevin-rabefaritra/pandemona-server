@@ -1,6 +1,6 @@
 package studio.startapps.pandemona.util;
 
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.util.DigestUtils;
 
 public interface StringUtils {

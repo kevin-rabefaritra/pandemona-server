@@ -3,9 +3,9 @@ package studio.startapps.pandemona.stats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.jdbc.JdbcTestUtils;
+import studio.startapps.pandemona.core.IntegrationTest;
 import studio.startapps.pandemona.stats.internal.EndpointCounter;
 import studio.startapps.pandemona.stats.internal.EndpointCounterRepository;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@IntegrationTest
 class EndpointCounterServiceTest {
 
     @Autowired
@@ -39,7 +39,7 @@ class EndpointCounterServiceTest {
 
         LocalDate requestDate = LocalDate.of(2025, 3, 10);
         String endpoint = "/api/some-endpoint";
-        counterService.logRequest(requestDate, endpoint);
+        counterService.logRequest(requestDate, endpoint, "2.0");
 
         counterCount = endpointCounterRepository.count();
         assertThat(counterCount).isOne();
@@ -47,8 +47,9 @@ class EndpointCounterServiceTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).hasSize(1);
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestDate()).isEqualTo(requestDate);
+        assertThat(endpointCounter.getVersion()).isEqualTo("2.0");
         assertThat(endpointCounter.getRequestCount()).isOne();
     }
 
@@ -62,8 +63,8 @@ class EndpointCounterServiceTest {
         String endpoint = "/api/some-endpoint";
 
         // log 2 requests
-        counterService.logRequest(requestDate, endpoint);
-        counterService.logRequest(requestDate, endpoint);
+        counterService.logRequest(requestDate, endpoint, "2.0");
+        counterService.logRequest(requestDate, endpoint, "2.0");
 
         counterCount = endpointCounterRepository.count();
         assertThat(counterCount).isOne();
@@ -71,7 +72,7 @@ class EndpointCounterServiceTest {
         List<EndpointCounter> endpointCounterList = endpointCounterRepository.findAll();
         assertThat(endpointCounterList).hasSize(1);
 
-        EndpointCounter endpointCounter = endpointCounterList.get(0);
+        EndpointCounter endpointCounter = endpointCounterList.getFirst();
         assertThat(endpointCounter.getRequestDate()).isEqualTo(requestDate);
         assertThat(endpointCounter.getRequestCount()).isEqualTo(2L);
     }
@@ -83,9 +84,9 @@ class EndpointCounterServiceTest {
         assertThat(counterCount).isZero();
 
         // log 2 requests
-        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-1");
-        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-1");
-        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-2");
+        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-1", "2.0");
+        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-1", "2.0");
+        counterService.logRequest(LocalDate.of(2025, 3, 10), "/api/endpoint-2", "2.0");
 
         counterCount = endpointCounterRepository.count();
         assertThat(counterCount).isEqualTo(2L);

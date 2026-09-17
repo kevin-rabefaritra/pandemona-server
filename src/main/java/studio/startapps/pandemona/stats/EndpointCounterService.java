@@ -31,13 +31,13 @@ public class EndpointCounterService {
         return dateRange.parallelStream().map(this::findSummary).toList();
     }
 
-    void logRequest(String endpoint) {
-        logRequest(LocalDate.now(), endpoint);
+    void logRequest(String endpoint, String version) {
+        logRequest(LocalDate.now(), endpoint, version);
     }
 
-    void logRequest(LocalDate requestDate, String endpoint) {
+    void logRequest(LocalDate requestDate, String endpoint, String version) {
         // find by requestDate / endpoint
-        Optional<EndpointCounter> optionalEndpointCounter = endpointCounterRepository.findByEndpointAndDate(endpoint, requestDate);
+        Optional<EndpointCounter> optionalEndpointCounter = endpointCounterRepository.findByEndpointDateAndVersion(endpoint, requestDate, version);
 
         optionalEndpointCounter.ifPresentOrElse(
             endpointCounter -> {
@@ -48,6 +48,7 @@ public class EndpointCounterService {
                 EndpointCounter endpointCounter = EndpointCounter.builder()
                         .requestDate(requestDate)
                         .requestEndpoint(endpoint)
+                        .version(version)
                         .requestCount(1L)
                         .build();
                 endpointCounterRepository.save(endpointCounter);

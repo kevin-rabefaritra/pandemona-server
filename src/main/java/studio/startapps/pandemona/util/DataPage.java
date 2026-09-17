@@ -1,9 +1,11 @@
 package studio.startapps.pandemona.util;
 
+import lombok.Builder;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+@Builder
 public record DataPage<T>(
     List<T> content,
     int totalPages,
